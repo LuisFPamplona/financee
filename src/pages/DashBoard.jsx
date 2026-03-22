@@ -1,7 +1,7 @@
-import { BanknoteArrowDown, BanknoteArrowUp } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import TransactionList from "../components/TransactionList.jsx";
 
-const Dashboard = ({ balance }) => {
+const Dashboard = ({ balance, transactions, deleteTransaction }) => {
   const navigate = useNavigate();
   return (
     <>
@@ -17,6 +17,10 @@ const Dashboard = ({ balance }) => {
             <p>Registrar transaçao</p>
           </button>
         </div>
+        <TransactionList
+          transactions={transactions}
+          deleteTransaction={deleteTransaction}
+        />
       </section>
     </>
   );
