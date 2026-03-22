@@ -1,7 +1,7 @@
 import { BanknoteArrowDown, BanknoteArrowUp } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-const Dashboard = ({ balance, setBalance }) => {
+const Dashboard = ({ balance }) => {
   const navigate = useNavigate();
   return (
     <>
@@ -11,10 +11,10 @@ const Dashboard = ({ balance, setBalance }) => {
         </div>
         <div className="">
           <button
-            className="bg-green-400 w-8 h-8 rounded-2xl flex justify-center items-center active:scale-95"
+            className="bg-green-400 p-2 text-white font-bold rounded-2xl flex justify-center items-center active:scale-95 cursor-pointer hover:scale-105 transition-all"
             onClick={() => navigate("/AddTransaction")}
           >
-            <BanknoteArrowUp />
+            <p>Registrar transaçao</p>
           </button>
         </div>
       </section>

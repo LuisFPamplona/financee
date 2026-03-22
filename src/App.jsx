@@ -5,20 +5,23 @@ import AddTransaction from "./pages/AddTransaction";
 import { useState } from "react";
 
 function App() {
+  const [transactions, setTransactions] = useState([]);
   const [balance, setBalance] = useState(0);
 
   return (
     <>
       <Router>
         <Routes>
-          <Route
-            path="/"
-            element={<Dashboard balance={balance} setBalance={setBalance} />}
-          />
+          <Route path="/" element={<Dashboard balance={balance} />} />
           <Route
             path="/AddTransaction"
             element={
-              <AddTransaction balance={balance} setBalance={setBalance} />
+              <AddTransaction
+                transactions={transactions}
+                setTransactions={setTransactions}
+                balance={balance}
+                setBalance={setBalance}
+              />
             }
           />
         </Routes>
