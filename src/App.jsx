@@ -2,11 +2,16 @@ import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Dashboard from "./pages/DashBoard";
 import AddTransaction from "./pages/AddTransaction";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { balanceAdjust } from "../utils/balance";
 
 function App() {
   const [transactions, setTransactions] = useState([]);
   const [balance, setBalance] = useState(0);
+
+  useEffect(() => {
+    setBalance(() => balanceAdjust(transactions));
+  }, [transactions]);
 
   return (
     <>

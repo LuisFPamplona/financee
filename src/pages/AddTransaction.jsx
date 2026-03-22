@@ -42,6 +42,7 @@ const AddTransaction = ({ transactions, setTransactions }) => {
         date: newTransaction.date,
       };
       setTransactions((prev) => [...prev, data]);
+      navigate("/");
     }
   };
 
@@ -132,8 +133,6 @@ const AddTransaction = ({ transactions, setTransactions }) => {
                   type: transactionType,
                   date: dateInput.current.value,
                 };
-
-                console.log("DATA OK", data);
 
                 sendTransaction(data);
               }
