@@ -1,12 +1,14 @@
 import { CalendarDays, Check, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { saveTransaction } from "../../services/storage";
 
 const AddTransaction = ({ transactions, setTransactions }) => {
   const incomeInput = useRef();
   const outcomeInput = useRef();
   const valueInput = useRef("");
   const dateInput = useRef();
+  const nameInput = useRef("");
 
   const [incomeCheck, setIncomeCheck] = useState();
   const [outcomeCheck, setOutcomeCheck] = useState();
@@ -14,10 +16,6 @@ const AddTransaction = ({ transactions, setTransactions }) => {
   const [valueText, setValueText] = useState();
 
   const navigate = useNavigate();
-
-  useEffect(() => {
-    console.log(transactions);
-  }, [transactions]);
 
   const sendTransaction = (newTransaction) => {
     let valueText = newTransaction.value;
@@ -28,20 +26,34 @@ const AddTransaction = ({ transactions, setTransactions }) => {
 
       const data = {
         id: newTransaction.id,
+        name: newTransaction.name,
         value: Number(value),
         type: newTransaction.type,
         date: newTransaction.date,
       };
 
-      setTransactions((prev) => [...prev, data]);
+      setTransactions((prev) => {
+        const newList = [...prev, data];
+        saveTransaction(newList);
+
+        return newList;
+      });
+      navigate("/");
     } else {
       const data = {
         id: newTransaction.id,
+        name: newTransaction.name,
         value: Number(valueText),
         type: newTransaction.type,
         date: newTransaction.date,
       };
-      setTransactions((prev) => [...prev, data]);
+      setTransactions((prev) => {
+        const newList = [...prev, data];
+        saveTransaction(newList);
+
+        return newList;
+      });
+      saveTransaction(transactions);
       navigate("/");
     }
   };
@@ -49,6 +61,14 @@ const AddTransaction = ({ transactions, setTransactions }) => {
   return (
     <>
       <section className="flex flex-col items-center justify-between gap-2 mt-8">
+        <div>
+          <input
+            type="text"
+            className="border text-center"
+            placeholder="Descrição"
+            ref={nameInput}
+          />
+        </div>
         <div className="flex items-center justify-center border p-1 rounded-2xl">
           <p className="text-3xl">R$</p>
           <input
@@ -126,9 +146,12 @@ const AddTransaction = ({ transactions, setTransactions }) => {
                 console.log("TIPO NAO SELECIONADO");
               } else if (dateInput.current.value == "") {
                 console.log("DATA NAO SELECIONADA");
+              } else if (nameInput.current.value.trim() == "") {
+                console.log("NOME NAO INFORMADO");
               } else {
                 const data = {
                   id: Date.now(),
+                  name: nameInput.current.value,
                   value: valueInput.current.value,
                   type: transactionType,
                   date: dateInput.current.value,
