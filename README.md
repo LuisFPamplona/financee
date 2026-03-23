@@ -61,10 +61,8 @@ Este projeto faz parte do meu processo de transição e evolução para me torna
 
 ## 📌 Próximos passos
 
-* [ ] Implementar sistema de transações completo
-* [ ] Adicionar persistência com localStorage
 * [ ] Criar filtros e categorias
-* [ ] Melhorar UI/UX (dark mode)
+* [ ] Melhorar UI/UX
 * [ ] Integrar com backend (API REST)
 
 ---
