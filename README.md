@@ -1,6 +1,11 @@
 # 💸 Financee App
 
-Aplicação web **mobile-first** para controle de finanças pessoais, desenvolvida com React.
+Este projeto foi desenvolvido com foco exclusivo em dispositivos móveis.
+
+Para melhor experiência, utilize:
+
+Modo responsivo do navegador (DevTools)
+Ou acesse diretamente pelo celular
 
 ## 🚀 Sobre o projeto
 
