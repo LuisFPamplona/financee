@@ -1,10 +1,10 @@
-import { Trash, Trash2, X } from "lucide-react";
-
 const TransactionItem = ({ value, date, name, type, id, onDelete }) => {
   const typeColor = type === "income" ? "bg-green-400" : "bg-red-400";
 
   const balanceText = String(value).replace(".", ",");
   let editedValue;
+
+  const formatted = new Date(date).toLocaleDateString("pt-BR");
 
   if (balanceText.includes(",")) {
     const centsStart = balanceText.indexOf(",");
@@ -22,22 +22,19 @@ const TransactionItem = ({ value, date, name, type, id, onDelete }) => {
   return (
     <>
       <div
-        className={`border p-1 m-1 ${typeColor} flex items-center justify-between gap-4`}
+        className={`border flex items-center justify-between gap-4 max-h-20 w-80 mt-1`}
       >
-        <div className="flex flex-col justify-center items-center min-w-[90%] max-w-[90%]">
-          <p>{name}</p>
-          <p>{"R$" + editedValue}</p>
-          <p>{date}</p>
-        </div>
-        <div>
-          <button
-            className="bg-white border rounded-2xl p-1 active:scale-95 cursor-pointer hover:scale-105 transition-all"
-            onClick={() => {
-              onDelete(id);
-            }}
+        <div className="flex flex-col justify-center items-center w-full ">
+          <p className="border-b w-full text-center h-6">{name}</p>
+          <div
+            className={`flex border-b items-center ${typeColor} justify-center relative  h-14 w-full`}
           >
-            <Trash2 width={16} height={16} />
-          </button>
+            <p className="absolute right-1 bottom-1  text-sm">{formatted}</p>
+            <div className="flex items-baseline gap-1">
+              <p>R$</p>
+              <p className="text-2xl tracking-wide">{editedValue}</p>
+            </div>
+          </div>
         </div>
       </div>
     </>
