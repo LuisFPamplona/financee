@@ -1,8 +1,19 @@
 export const balanceAdjust = (transactions) => {
-  return transactions.reduce((acc, item) => {
+  const res = transactions.reduce((acc, item) => {
     return acc + item.value;
   }, 0);
-};
+  const balanceText = String(res).replace(".", ",");
 
-//pegar as trancaçoes -> separar os valores -> calcular o saldo
-//sempre que a lista de transaçao mudare
+  if (balanceText.includes(",")) {
+    const centsStart = balanceText.indexOf(",");
+    const cents = balanceText.slice(centsStart);
+
+    if (cents.length < 3) {
+      return balanceText + "0";
+    } else {
+      return balanceText;
+    }
+  } else {
+    return balanceText + ",00";
+  }
+};
