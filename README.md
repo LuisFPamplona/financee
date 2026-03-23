@@ -18,9 +18,9 @@ Este projeto foi desenvolvido como parte da minha evolução em React, com o obj
 ## 🧠 Funcionalidades
 
 * ✅ Visualização do saldo atual
-* 🔜 Adição de valores (entrada e saída)
-* 🔜 Cadastro de transações
-* 🔜 Histórico de movimentações
+* ✅ Adição de valores (entrada e saída)
+* ✅ Cadastro de transações
+* ✅ Histórico de movimentações
 * 🔜 Filtros por categoria
 * 🔜 Integração com backend
 
