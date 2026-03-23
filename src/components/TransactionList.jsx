@@ -4,7 +4,7 @@ import TransactionItem from "./TransactionItem";
 const TransactionList = ({ transactions, deleteTransaction }) => {
   const transactionList = transactions.map((item, index) => {
     return (
-      <div className="w-64" key={index}>
+      <div className="w-full" key={index}>
         <TransactionItem
           value={item.value}
           date={item.date}

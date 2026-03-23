@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import TransactionList from "../components/TransactionList.jsx";
 import { Banknote } from "lucide-react";
+import MonthSelector from "../components/MonthSelector.jsx";
 
 const Dashboard = ({ balance, transactions, deleteTransaction }) => {
   const navigate = useNavigate();
@@ -25,10 +26,16 @@ const Dashboard = ({ balance, transactions, deleteTransaction }) => {
           </button>
         </div>
 
-        <TransactionList
-          transactions={transactions}
-          deleteTransaction={deleteTransaction}
-        />
+        <div className="w-full">
+          <MonthSelector />
+        </div>
+
+        <div className="w-full flex items-center justify-center">
+          <TransactionList
+            transactions={transactions}
+            deleteTransaction={deleteTransaction}
+          />
+        </div>
       </section>
     </>
   );
