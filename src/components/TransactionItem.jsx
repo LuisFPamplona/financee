@@ -3,6 +3,22 @@ import { Trash, Trash2, X } from "lucide-react";
 const TransactionItem = ({ value, date, name, type, id, onDelete }) => {
   const typeColor = type === "income" ? "bg-green-400" : "bg-red-400";
 
+  const balanceText = String(value).replace(".", ",");
+  let editedValue;
+
+  if (balanceText.includes(",")) {
+    const centsStart = balanceText.indexOf(",");
+    const cents = balanceText.slice(centsStart);
+
+    if (cents.length < 3) {
+      editedValue = balanceText + "0";
+    } else {
+      editedValue = balanceText;
+    }
+  } else {
+    editedValue = balanceText + ",00";
+  }
+
   return (
     <>
       <div
@@ -10,7 +26,7 @@ const TransactionItem = ({ value, date, name, type, id, onDelete }) => {
       >
         <div className="flex flex-col justify-center items-center min-w-[90%] max-w-[90%]">
           <p>{name}</p>
-          <p>{"R$" + value}</p>
+          <p>{"R$" + editedValue}</p>
           <p>{date}</p>
         </div>
         <div>
