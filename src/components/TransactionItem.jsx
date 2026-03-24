@@ -1,4 +1,4 @@
-const TransactionItem = ({ value, date, name, type, id, onDelete }) => {
+const TransactionItem = ({ value, date, name, type, id}) => {
   const typeColor = type === "income" ? "bg-green-400" : "bg-red-400";
 
   const balanceText = String(value).replace(".", ",");
