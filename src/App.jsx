@@ -5,6 +5,7 @@ import AddTransaction from "./pages/AddTransaction";
 import { useEffect, useState } from "react";
 import { balanceAdjust } from "../utils/balance";
 import { loadTransaction, saveTransaction } from "../services/storage";
+import TransactionDetail from "./pages/TransactionDetail";
 
 function App() {
   const [transactions, setTransactions] = useState([]);
@@ -50,6 +51,10 @@ function App() {
                 setBalance={setBalance}
               />
             }
+          />
+          <Route
+            path="/transaction/:transactionId"
+            element={<TransactionDetail onDelete={deleteTransaction} />}
           />
         </Routes>
       </Router>

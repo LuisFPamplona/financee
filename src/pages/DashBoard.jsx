@@ -3,7 +3,7 @@ import TransactionList from "../components/TransactionList.jsx";
 import { Banknote } from "lucide-react";
 import MonthSelector from "../components/MonthSelector.jsx";
 
-const Dashboard = ({ balance, transactions, deleteTransaction }) => {
+const Dashboard = ({ balance, transactions }) => {
   const navigate = useNavigate();
 
   return (
@@ -31,10 +31,7 @@ const Dashboard = ({ balance, transactions, deleteTransaction }) => {
         </div>
 
         <div className="w-full flex items-center justify-center">
-          <TransactionList
-            transactions={transactions}
-            deleteTransaction={deleteTransaction}
-          />
+          <TransactionList transactions={transactions} />
         </div>
       </section>
     </>
