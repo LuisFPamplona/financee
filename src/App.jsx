@@ -8,21 +8,22 @@ import { loadTransaction, saveTransaction } from "../services/storage";
 import TransactionDetail from "./pages/TransactionDetail";
 
 function App() {
-  const [transactions, setTransactions] = useState([]);
+  const [transactions, setTransactions] = useState(() => {
+    return loadTransaction();
+  });
   const [balance, setBalance] = useState(0);
-
-  useEffect(() => {
-    setTransactions(loadTransaction());
-  }, []);
 
   useEffect(() => {
     setBalance(() => balanceAdjust(transactions));
   }, [transactions]);
 
+  useEffect(() => {
+    saveTransaction(transactions);
+  }, [transactions]);
+
   const deleteTransaction = (id) => {
     setTransactions((prev) => {
       const updated = prev.filter((t) => t.id !== id);
-      saveTransaction(updated);
       return updated;
     });
   };
