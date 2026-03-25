@@ -54,7 +54,12 @@ function App() {
           />
           <Route
             path="/transaction/:transactionId"
-            element={<TransactionDetail onDelete={deleteTransaction} />}
+            element={
+              <TransactionDetail
+                onDelete={deleteTransaction}
+                setTransactions={setTransactions}
+              />
+            }
           />
         </Routes>
       </Router>
