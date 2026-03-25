@@ -3,13 +3,18 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { saveTransaction } from "../../services/storage";
 import BottomNav from "../components/BottomNav";
+import DateInput from "../components/DateInput";
 
 const AddTransaction = ({ transactions, setTransactions }) => {
   const incomeInput = useRef();
   const outcomeInput = useRef();
   const valueInput = useRef("");
-  const dateInput = useRef();
+  const dateInput = useRef(); // 'dd/mm/yyyy'
   const nameInput = useRef("");
+
+  const [dayInput, setDayInput] = useState();
+  const [monthInput, setMonthInput] = useState();
+  const [yearInput, setYearInput] = useState();
 
   const [incomeCheck, setIncomeCheck] = useState();
   const [outcomeCheck, setOutcomeCheck] = useState();
@@ -61,115 +66,129 @@ const AddTransaction = ({ transactions, setTransactions }) => {
 
   return (
     <>
-      <section className="flex flex-col items-center justify-between gap-2 mt-8">
-        <div>
-          <input
-            type="text"
-            className="border text-center"
-            placeholder="Descrição"
-            ref={nameInput}
-          />
-        </div>
-        <div className="flex items-center justify-center border p-1 rounded-2xl">
-          <p className="text-3xl">R$</p>
-          <input
-            type="text"
-            value={valueText}
-            onChange={(e) => {
-              let val = e.target.value;
-
-              val = val.replace(/[^0-9,]/g, "");
-
-              const parts = val.split(",");
-              if (parts.length > 2) {
-                val = parts[0] + "," + parts.slice(1).join("");
-              }
-
-              if (val.includes(",")) {
-                const [inteiro, decimal] = val.split(",");
-                val = inteiro + "," + decimal.slice(0, 2);
-              }
-
-              setValueText(val);
-            }}
-            placeholder="0,00"
-            className="h-12 text-3xl w-42 text-center outline-0"
-            ref={valueInput}
-          />
-        </div>
-        <div className="flex gap-4">
-          <div className="flex justify-center items-center gap-1">
+      <section className="relative h-screen">
+        <div className="border w-[90%] flex flex-col justify-center items-center absolute top-[40%] left-[50%] -translate-x-1/2 -translate-y-1/2 rounded-xl outline-0 shadow-xl transition-shadow duration-300 border-stone-400">
+          <div className="w-82 flex justify-center mt-2 mb-2">
+            <span className="text-2xl">Nova transaçao</span>
+          </div>
+          <div className="w-82">
             <input
-              type="checkbox"
-              ref={incomeInput}
-              checked={incomeCheck}
+              type="text"
+              className="bg-white p-3 w-full rounded-xl outline-0 shadow-xl hover:shadow-2xl transition-shadow duration-300 mt-2"
+              placeholder="Identificador"
+              ref={nameInput}
+            />
+          </div>
+
+          <div className="flex items-baseline gap-1  mt-2 bg-white p-3 w-82 rounded-xl outline-0 shadow-xl hover:shadow-2xl transition-shadow duration-300 ">
+            <p className="bg-white">R$</p>
+
+            <input
+              type="text"
+              value={valueText}
+              onChange={(e) => {
+                let val = e.target.value;
+                val = val.replace(/[^0-9,]/g, "");
+                const parts = val.split(",");
+                if (parts.length > 2) {
+                  val = parts[0] + "," + parts.slice(1).join("");
+                }
+                if (val.includes(",")) {
+                  const [inteiro, decimal] = val.split(",");
+                  val = inteiro + "," + decimal.slice(0, 2);
+                }
+                setValueText(val);
+              }}
+              placeholder="0,00"
+              className="outline-0 text-xl"
+              ref={valueInput}
+            />
+          </div>
+
+          <div className="bg-white p-3 w-82 rounded-xl outline-0 shadow-xl hover:shadow-2xl transition-shadow duration-300 flex gap-6 items-center justify-center mt-2">
+            <div className="flex justify-center items-center gap-1">
+              <input
+                type="checkbox"
+                ref={incomeInput}
+                checked={incomeCheck}
+                onClick={() => {
+                  const isChecked = incomeInput.current.checked;
+                  if (isChecked) {
+                    setIncomeCheck(true);
+                    setOutcomeCheck(false);
+                    setTransactionType("income");
+                  }
+                }}
+              />
+              Entrada
+            </div>
+
+            <div className="flex justify-center items-center gap-1">
+              <input
+                type="checkbox"
+                ref={outcomeInput}
+                checked={outcomeCheck}
+                onClick={() => {
+                  const isChecked = outcomeInput.current.checked;
+                  if (isChecked) {
+                    setIncomeCheck(false);
+                    setOutcomeCheck(true);
+                    setTransactionType("outcome");
+                  }
+                }}
+              />
+              Saída
+            </div>
+          </div>
+
+          <div className="mt-2">
+            <DateInput
+              setDayInput={setDayInput}
+              setMonthInput={setMonthInput}
+              setYearInput={setYearInput}
+            />
+          </div>
+
+          <div className="flex w-82 justify-between mt-2 mb-2">
+            <button
+              className="bg-gray-400 rounded-2xl p-1 active:scale-95 cursor-pointer hover:scale-105 transition-all"
+              onClick={() => navigate("/")}
+            >
+              <X width={48} height={48} />
+            </button>
+            <button
+              className="bg-gray-800 rounded-2xl p-1 active:scale-95 cursor-pointer hover:scale-105 transition-all"
               onClick={() => {
-                const isChecked = incomeInput.current.checked;
-                if (isChecked) {
-                  setIncomeCheck(true);
-                  setOutcomeCheck(false);
-                  setTransactionType("income");
+                if (
+                  valueInput.current.value == "" ||
+                  valueInput.current.value < 0
+                ) {
+                  console.log("VALOR INSERIDO INVALIDO");
+                } else if (transactionType == undefined) {
+                  console.log("TIPO NAO SELECIONADO");
+                } else if (
+                  dayInput == "" ||
+                  monthInput == "" ||
+                  yearInput == ""
+                ) {
+                  console.log("DATA NAO SELECIONADA");
+                } else if (nameInput.current.value.trim() == "") {
+                  console.log("NOME NAO INFORMADO");
+                } else {
+                  const data = {
+                    id: Date.now(),
+                    name: nameInput.current.value,
+                    value: valueInput.current.value,
+                    type: transactionType,
+                    date: dayInput + "/" + monthInput + "/" + yearInput,
+                  };
+                  sendTransaction(data);
                 }
               }}
-            />
-            Entrada
+            >
+              <Check color="white" width={48} height={48} />
+            </button>
           </div>
-          <div className="flex justify-center items-center gap-1">
-            <input
-              type="checkbox"
-              ref={outcomeInput}
-              checked={outcomeCheck}
-              onClick={() => {
-                const isChecked = outcomeInput.current.checked;
-                if (isChecked) {
-                  setIncomeCheck(false);
-                  setOutcomeCheck(true);
-                  setTransactionType("outcome");
-                }
-              }}
-            />
-            Saída
-          </div>
-        </div>
-        <div className="flex justify-center items-center gap-1 border p-1 pl-1.5 pr-1.5">
-          <input type="date" ref={dateInput} />
-        </div>
-        <div className="flex gap-4">
-          <button
-            className="bg-green-400 rounded-2xl p-1 active:scale-95 cursor-pointer hover:scale-105 transition-all"
-            onClick={() => {
-              if (
-                valueInput.current.value == "" ||
-                valueInput.current.value < 0
-              ) {
-                console.log("VALOR INSERIDO INVALIDO");
-              } else if (transactionType == undefined) {
-                console.log("TIPO NAO SELECIONADO");
-              } else if (dateInput.current.value == "") {
-                console.log("DATA NAO SELECIONADA");
-              } else if (nameInput.current.value.trim() == "") {
-                console.log("NOME NAO INFORMADO");
-              } else {
-                const data = {
-                  id: Date.now(),
-                  name: nameInput.current.value,
-                  value: valueInput.current.value,
-                  type: transactionType,
-                  date: dateInput.current.value,
-                };
-
-                sendTransaction(data);
-              }
-            }}
-          >
-            <Check />
-          </button>
-          <button
-            className="bg-red-400 rounded-2xl p-1 active:scale-95 cursor-pointer hover:scale-105 transition-all"
-            onClick={() => navigate("/")}
-          >
-            <X />
-          </button>
         </div>
       </section>
       <BottomNav />
