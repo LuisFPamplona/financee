@@ -37,32 +37,30 @@ const TransactionDetail = ({ onDelete, setTransactions }) => {
       return alert("Data nao pode estar vazia", date);
     }
 
-    if (incomeCheck.current.checked == true) {
+    if (tipo === "income") {
       type = "income";
-    } else if (outcomeCheck.current.checked == true) {
+    } else if (tipo === "outcome") {
       type = "outcome";
       correctValue = "-" + value;
-    } else if (
-      incomeCheck.current.checked == false &&
-      outcomeCheck.current.checked == false
-    ) {
-      return alert("Deve selecionar entrada ou saida");
+    } else {
+      return alert("Deve selecionar entrada ou saída");
     }
 
     const data = {
-      id: transactionId,
+      id: Number(transactionId),
       name: name,
       value: Number(correctValue),
       type: type,
       date: date,
     };
 
-    tList[indexToEdit] = data;
+    const updatedList = [...tList];
+    updatedList[indexToEdit] = data;
 
     setTransactions(() => {
-      saveTransaction(tList);
+      saveTransaction(updatedList);
       navigate("/");
-      return tList;
+      return updatedList;
     });
   };
 
@@ -72,10 +70,13 @@ const TransactionDetail = ({ onDelete, setTransactions }) => {
       (element) => element.id == transactionId,
     );
 
-    if (found.type == "outcome") {
-      found.value = String(found.value).slice(1);
-    }
-    setTransaction(found);
+    const formatted = {
+      ...found,
+      value:
+        found.type === "outcome" ? String(found.value).slice(1) : found.value,
+    };
+
+    setTransaction(formatted);
   }, [transactionId]);
 
   if (!transaction) {
@@ -124,7 +125,6 @@ const TransactionDetail = ({ onDelete, setTransactions }) => {
             <input
               type="checkbox"
               ref={outcomeCheck}
-              defaultChecked="true"
               checked={tipo === "outcome"}
               onChange={() => handleChange("outcome")}
             />
