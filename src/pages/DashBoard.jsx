@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import TransactionList from "../components/TransactionList.jsx";
 import { Banknote } from "lucide-react";
 import MonthSelector from "../components/MonthSelector.jsx";
+import BottomNav from "../components/BottomNav.jsx";
 
 const Dashboard = ({ balance, transactions }) => {
   const navigate = useNavigate();
@@ -16,22 +17,15 @@ const Dashboard = ({ balance, transactions }) => {
             {balance}
           </div>
         </div>
-        <div className="flex items-center justify-center">
-          <button
-            className="bg-gray-700 p-2 text-white font-bold rounded-2xl flex justify-center items-center gap-2 active:scale-95 cursor-pointer hover:scale-105 transition-all"
-            onClick={() => navigate("/AddTransaction")}
-          >
-            <p>Nova transaçao</p>
-            <Banknote color="green" fill="lime" className="pt-0.5 scale-140" />
-          </button>
-        </div>
-
         <div className="w-full">
           <MonthSelector />
         </div>
 
         <div className="w-full flex items-center justify-center">
           <TransactionList transactions={transactions} />
+        </div>
+        <div>
+          <BottomNav />
         </div>
       </section>
     </>

@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { loadTransaction, saveTransaction } from "../../services/storage";
 import { useEffect, useRef, useState } from "react";
+import BottomNav from "../components/BottomNav.jsx";
 
 const TransactionDetail = ({ onDelete, setTransactions }) => {
   const { transactionId } = useParams();
@@ -155,6 +156,7 @@ const TransactionDetail = ({ onDelete, setTransactions }) => {
       >
         Deletar
       </button>
+      <BottomNav />
     </>
   );
 };

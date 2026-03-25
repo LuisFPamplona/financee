@@ -2,6 +2,7 @@ import { CalendarDays, Check, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { saveTransaction } from "../../services/storage";
+import BottomNav from "../components/BottomNav";
 
 const AddTransaction = ({ transactions, setTransactions }) => {
   const incomeInput = useRef();
@@ -171,6 +172,7 @@ const AddTransaction = ({ transactions, setTransactions }) => {
           </button>
         </div>
       </section>
+      <BottomNav />
     </>
   );
 };
