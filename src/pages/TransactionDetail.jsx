@@ -1,17 +1,24 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { loadTransaction, saveTransaction } from "../../services/storage";
-import { useEffect, useRef, useState } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import BottomNav from "../components/BottomNav.jsx";
+import DateInput from "../components/DateInput.jsx";
+import { Check, Trash2, X } from "lucide-react";
 
 const TransactionDetail = ({ onDelete, setTransactions }) => {
   const { transactionId } = useParams();
   const navigate = useNavigate();
+
   const [transaction, setTransaction] = useState(null);
   const [tipo, setTipo] = useState(null);
+  const [dayInput, setDayInput] = useState();
+  const [monthInput, setMonthInput] = useState();
+  const [yearInput, setYearInput] = useState();
+  const [valueText, setValueText] = useState();
 
   const tName = useRef();
   const tValue = useRef();
-  const tDate = useRef();
+
   const incomeCheck = useRef();
   const outcomeCheck = useRef();
 
@@ -86,76 +93,118 @@ const TransactionDetail = ({ onDelete, setTransactions }) => {
 
   return (
     <>
-      <button
-        className="border rounded-xl p-1.5 font-bold bg-black text-white hover:scale-105 active:scale-95 transition-all cursor-pointer"
-        onClick={() => navigate("/")}
-      >
-        Voltar
-      </button>
-      <div className="flex gap-1 p-1 flex-col border justify-center items-center mt-4 mr-4 ml-4">
-        <input
-          type="text"
-          className="border"
-          ref={tName}
-          defaultValue={transaction.name}
-        ></input>
-        <input
-          type="text"
-          className="border"
-          ref={tValue}
-          defaultValue={transaction.value}
-        ></input>
-        <input
-          type="date"
-          className="border"
-          ref={tDate}
-          defaultValue={transaction.date}
-        ></input>
-        <div>
-          <label>
+      <section className="relative h-screen">
+        <div className="border w-[90%] flex flex-col justify-center items-center absolute top-[40%] left-[50%] -translate-x-1/2 -translate-y-1/2 rounded-xl outline-0 shadow-xl transition-shadow duration-300 border-stone-400">
+          <button
+            className="rounded-xl p-1.5 absolute top-2 right-2 bg-red-200 font-bold text-white hover:scale-105 active:scale-95 transition-all cursor-pointer"
+            onClick={() => {
+              if (
+                window.confirm("Tem certeza que quer deletar esta transaçao?")
+              ) {
+                onDelete(transaction.id);
+                navigate("/");
+              }
+            }}
+          >
+            <Trash2 color="red" />
+          </button>
+          <div className="w-82 flex justify-center mt-2 mb-6">
+            <span className="text-2xl">Editar transaçao</span>
+          </div>
+          <div className="w-82">
             <input
-              type="checkbox"
-              ref={incomeCheck}
-              checked={tipo === "income"}
-              onChange={() => handleChange("income")}
+              type="text"
+              ref={tName}
+              className="bg-white p-3 w-full rounded-xl outline-0 shadow-xl hover:shadow-2xl transition-shadow duration-300 mt-2"
+              placeholder="Nome"
+              defaultValue={transaction.name}
             />
-            Entrada
-          </label>
+          </div>
 
-          <label style={{ marginLeft: "10px" }}>
+          <div className="flex items-baseline gap-1  mt-2 bg-white p-3 w-82 rounded-xl outline-0 shadow-xl hover:shadow-2xl transition-shadow duration-300 ">
+            <p className="bg-white">R$</p>
+
             <input
-              type="checkbox"
-              ref={outcomeCheck}
-              checked={tipo === "outcome"}
-              onChange={() => handleChange("outcome")}
+              type="text"
+              ref={tValue}
+              defaultValue={transaction.value}
+              value={valueText}
+              placeholder="0,00"
+              className="outline-0 text-xl"
+              onChange={(e) => {
+                let val = e.target.value;
+                val = val.replace(/[^0-9,]/g, "");
+                const parts = val.split(",");
+                if (parts.length > 2) {
+                  val = parts[0] + "," + parts.slice(1).join("");
+                }
+                if (val.includes(",")) {
+                  const [inteiro, decimal] = val.split(",");
+                  val = inteiro + "," + decimal.slice(0, 2);
+                }
+                setValueText(val);
+              }}
             />
-            Saída
-          </label>
+          </div>
+
+          <div className="bg-white p-3 w-82 rounded-xl outline-0 shadow-xl hover:shadow-2xl transition-shadow duration-300 flex gap-6 items-center justify-center mt-2">
+            <div className="flex justify-center items-center gap-1">
+              <input
+                type="checkbox"
+                checked={tipo === "income"}
+                onChange={() => handleChange("income")}
+                ref={incomeCheck}
+              />
+              Entrada
+            </div>
+
+            <div className="flex justify-center items-center gap-1">
+              <input
+                type="checkbox"
+                checked={tipo === "outcome"}
+                onChange={() => handleChange("outcome")}
+                ref={outcomeCheck}
+              />
+              Saída
+            </div>
+          </div>
+
+          <div className="mt-2">
+            <DateInput
+              defaultDate={transaction.date}
+              setDayInput={setDayInput}
+              setMonthInput={setMonthInput}
+              setYearInput={setYearInput}
+            />
+          </div>
+
+          <div className="flex w-82 justify-between mt-2 mb-2">
+            <button
+              className="bg-gray-400 rounded-2xl p-1 active:scale-95 cursor-pointer hover:scale-105 transition-all"
+              onClick={() => navigate("/")}
+            >
+              <X width={48} height={48} />
+            </button>
+            <button
+              className="bg-gray-800 rounded-2xl p-1 active:scale-95 cursor-pointer hover:scale-105 transition-all"
+              onClick={() => {
+                if (!dayInput || !monthInput || !yearInput) {
+                  alert("erro");
+                }
+
+                const value = tValue.current.value.replace(",", ".");
+                sendChanges(
+                  tName.current.value,
+                  Number(value),
+                  dayInput + "/" + monthInput + "/" + yearInput,
+                );
+              }}
+            >
+              <Check color="white" width={48} height={48} />
+            </button>
+          </div>
         </div>
-        <button
-          className="border rounded-xl p-1.5 font-bold bg-orange-400 text-white hover:scale-105 active:scale-95 transition-all cursor-pointer"
-          onClick={() => {
-            sendChanges(
-              tName.current.value,
-              tValue.current.value,
-              tDate.current.value,
-            );
-          }}
-        >
-          Confirmar
-        </button>
-      </div>
-      <button
-        className="border rounded-xl p-1.5 font-bold bg-red-400 text-white hover:scale-105 active:scale-95 transition-all cursor-pointer"
-        onClick={() => {
-          if (window.confirm("Tem certeza que quer deletar esta transaçao?")) {
-            onDelete(transaction.id);
-            navigate("/");
-          }
-        }}
-      >
-        Deletar
-      </button>
+      </section>
       <BottomNav />
     </>
   );
