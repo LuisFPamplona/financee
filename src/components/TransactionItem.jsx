@@ -1,10 +1,8 @@
-const TransactionItem = ({ value, date, name, type, id}) => {
-  const typeColor = type === "income" ? "bg-green-400" : "bg-red-400";
+const TransactionItem = ({ value, date, name, type, id }) => {
+  const typeColor = type === "income" ? "text-green-400" : "text-red-400";
 
   const balanceText = String(value).replace(".", ",");
   let editedValue;
-
-  const formatted = new Date(date).toLocaleDateString("pt-BR");
 
   if (balanceText.includes(",")) {
     const centsStart = balanceText.indexOf(",");
@@ -25,14 +23,20 @@ const TransactionItem = ({ value, date, name, type, id}) => {
         className={`border flex items-center justify-between gap-4 max-h-20 w-80 mt-1`}
       >
         <div className="flex flex-col justify-center items-center w-full ">
-          <p className="border-b w-full text-center h-6">{name}</p>
+          <p className="border-b w-full bg-white border-t text-center h-6">
+            {name}
+          </p>
           <div
-            className={`flex border-b items-center ${typeColor} justify-center relative  h-14 w-full`}
+            className={`flex border-b items-center bg-gray-800 justify-center relative  h-14 w-full`}
           >
-            <p className="absolute right-1 bottom-1  text-sm">{formatted}</p>
-            <div className="flex items-baseline gap-1">
+            <p className="absolute right-1 bottom-1 text-white text-sm">
+              {date}
+            </p>
+            <div className="flex text-white items-baseline gap-1">
               <p>R$</p>
-              <p className="text-2xl tracking-wide">{editedValue}</p>
+              <p className={`text-2xl ${typeColor} tracking-wide`}>
+                {editedValue}
+              </p>
             </div>
           </div>
         </div>

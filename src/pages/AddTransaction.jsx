@@ -75,7 +75,7 @@ const AddTransaction = ({ transactions, setTransactions }) => {
             <input
               type="text"
               className="bg-white p-3 w-full rounded-xl outline-0 shadow-xl hover:shadow-2xl transition-shadow duration-300 mt-2"
-              placeholder="Identificador"
+              placeholder="Nome"
               ref={nameInput}
             />
           </div>

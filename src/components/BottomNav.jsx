@@ -10,12 +10,12 @@ function BottomNav() {
         onClick={() => navigate("/")}
       >
         <Home size={20} />
-        <span>Home</span>
+        <span></span>
       </button>
 
       <button className="flex flex-col items-center text-gray-500 text-xs hover:text-black transition cursor-pointer p-3">
         <ChartBarStacked size={20} />
-        <span>Buscar</span>
+        <span></span>
       </button>
 
       <button
@@ -27,12 +27,12 @@ function BottomNav() {
 
       <button className="flex flex-col items-center text-gray-500 text-xs hover:text-black transition cursor-pointer p-3">
         <Bell size={20} />
-        <span>Alertas</span>
+        <span></span>
       </button>
 
       <button className="flex flex-col items-center text-gray-500 text-xs hover:text-black transition cursor-pointer p-3">
         <User size={20} />
-        <span>Perfil</span>
+        <span></span>
       </button>
     </nav>
   );

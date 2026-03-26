@@ -1,12 +1,9 @@
-import { useNavigate } from "react-router-dom";
+
 import TransactionList from "../components/TransactionList.jsx";
-import { Banknote } from "lucide-react";
 import MonthSelector from "../components/MonthSelector.jsx";
 import BottomNav from "../components/BottomNav.jsx";
 
 const Dashboard = ({ balance, transactions }) => {
-  const navigate = useNavigate();
-
   return (
     <>
       <section className="flex flex-col w-full items-center justify-center gap-2 ">
@@ -17,7 +14,7 @@ const Dashboard = ({ balance, transactions }) => {
             {balance}
           </div>
         </div>
-        <div className="w-full">
+        <div className="w-full bg-white">
           <MonthSelector />
         </div>
 
