@@ -1,4 +1,4 @@
-const TransactionItem = ({ value, date, name, type, id }) => {
+const TransactionItem = ({ value, date, name, type, category }) => {
   const typeColor = type === "income" ? "text-green-400" : "text-red-400";
 
   const balanceText = String(value).replace(".", ",");
@@ -31,6 +31,9 @@ const TransactionItem = ({ value, date, name, type, id }) => {
           >
             <p className="absolute right-1 bottom-1 text-white text-sm">
               {date}
+            </p>
+            <p className="absolute right-1 top-1 text-white text-sm">
+              {category}
             </p>
             <div className="flex text-white items-baseline gap-1">
               <p>R$</p>

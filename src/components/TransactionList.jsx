@@ -17,7 +17,7 @@ const TransactionList = ({ transactions }) => {
           date={item.date}
           name={item.name}
           type={item.type}
-          id={item.id}
+          category={item.category}
         />
       </div>
     );

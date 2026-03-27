@@ -1,20 +1,24 @@
-import { CalendarDays, Check, X } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { Check, ChevronsRight, Edit, X } from "lucide-react";
+import { use, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { saveTransaction } from "../../services/storage";
 import BottomNav from "../components/BottomNav";
 import DateInput from "../components/DateInput";
+import CategoryList from "./CategoryList";
 
 const AddTransaction = ({ transactions, setTransactions }) => {
   const incomeInput = useRef();
   const outcomeInput = useRef();
   const valueInput = useRef("");
-  const dateInput = useRef(); // 'dd/mm/yyyy'
   const nameInput = useRef("");
 
   const [dayInput, setDayInput] = useState();
   const [monthInput, setMonthInput] = useState();
   const [yearInput, setYearInput] = useState();
+  const [categoryInput, setCategoryInput] = useState(false);
+  const [categoryDisplay, setCategoryDisplay] = useState("hidden");
+  const [mainDisplay, setMainDisplay] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState();
 
   const [incomeCheck, setIncomeCheck] = useState();
   const [outcomeCheck, setOutcomeCheck] = useState();
@@ -22,6 +26,16 @@ const AddTransaction = ({ transactions, setTransactions }) => {
   const [valueText, setValueText] = useState();
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (categoryInput == true) {
+      setCategoryDisplay("");
+      setMainDisplay("hidden");
+    } else if (categoryInput == false) {
+      setCategoryDisplay("hidden");
+      setMainDisplay("");
+    }
+  }, [categoryInput]);
 
   const sendTransaction = (newTransaction) => {
     let valueText = newTransaction.value;
@@ -36,6 +50,7 @@ const AddTransaction = ({ transactions, setTransactions }) => {
         value: Number(value),
         type: newTransaction.type,
         date: newTransaction.date,
+        category: selectedCategory,
       };
 
       setTransactions((prev) => {
@@ -52,6 +67,7 @@ const AddTransaction = ({ transactions, setTransactions }) => {
         value: Number(valueText),
         type: newTransaction.type,
         date: newTransaction.date,
+        category: selectedCategory,
       };
       setTransactions((prev) => {
         const newList = [...prev, data];
@@ -66,7 +82,14 @@ const AddTransaction = ({ transactions, setTransactions }) => {
 
   return (
     <>
-      <section className="relative h-screen">
+      <div className={`${categoryDisplay}`}>
+        <CategoryList
+          setCategoryInput={setCategoryInput}
+          setSelectedCategory={setSelectedCategory}
+        />
+      </div>
+
+      <section className={`relative h-screen ${mainDisplay}`}>
         <div className="border w-[90%] flex flex-col justify-center items-center absolute top-[40%] left-[50%] -translate-x-1/2 -translate-y-1/2 rounded-xl outline-0 shadow-xl transition-shadow duration-300 border-stone-400">
           <div className="w-82 flex justify-center mt-2 mb-2">
             <span className="text-2xl">Nova transaçao</span>
@@ -103,6 +126,23 @@ const AddTransaction = ({ transactions, setTransactions }) => {
               className="outline-0 text-xl"
               ref={valueInput}
             />
+          </div>
+
+          <div
+            className="bg-white p-3 w-82 rounded-xl outline-0 shadow-xl hover:shadow-2xl transition-shadow duration-300 flex gap-6 items-center justify-center mt-2 cursor-pointer"
+            onClick={() => {
+              setCategoryInput(true);
+            }}
+          >
+            <div className="flex w-full justify-between">
+              {!selectedCategory && <p>Categorias</p>}
+              {!selectedCategory && <ChevronsRight />}
+              {selectedCategory && (
+                <div className="flex justify-between w-full relative">
+                  {selectedCategory} <Edit />
+                </div>
+              )}
+            </div>
           </div>
 
           <div className="bg-white p-3 w-82 rounded-xl outline-0 shadow-xl hover:shadow-2xl transition-shadow duration-300 flex gap-6 items-center justify-center mt-2">

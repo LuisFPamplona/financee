@@ -7,6 +7,7 @@ import { balanceAdjust } from "../utils/balance";
 import { loadTransaction, saveTransaction } from "../services/storage";
 import TransactionDetail from "./pages/TransactionDetail";
 
+
 function App() {
   const [transactions, setTransactions] = useState(() => {
     return loadTransaction();

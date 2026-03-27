@@ -7,6 +7,14 @@ export const loadTransaction = () => {
   return data ? JSON.parse(data) : [];
 };
 
+export const saveCategory = (data) => {
+  localStorage.setItem("categoryList", JSON.stringify(data));
+};
+
+export const loadCaterogy = () => {
+  return ["Salário", "Comida", "Automóvel", "Combustível", "Saúde", "Imóvel"];
+};
+
 /*
 const data = {
         id: String,
@@ -14,5 +22,6 @@ const data = {
         value: Number,
         type: String, // income || outcome
         date: String,
+        category: String
       };
 */

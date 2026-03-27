@@ -3,7 +3,8 @@ import { loadTransaction, saveTransaction } from "../../services/storage";
 import { useActionState, useEffect, useRef, useState } from "react";
 import BottomNav from "../components/BottomNav.jsx";
 import DateInput from "../components/DateInput.jsx";
-import { Check, Trash2, X } from "lucide-react";
+import { Check, ChevronsRight, Edit, Trash2, X } from "lucide-react";
+import CategoryList from "./CategoryList.jsx";
 
 const TransactionDetail = ({ onDelete, setTransactions }) => {
   const { transactionId } = useParams();
@@ -15,6 +16,11 @@ const TransactionDetail = ({ onDelete, setTransactions }) => {
   const [monthInput, setMonthInput] = useState();
   const [yearInput, setYearInput] = useState();
   const [valueText, setValueText] = useState();
+  const [selectedCategory, setSelectedCategory] = useState();
+  const [categoryInput, setCategoryInput] = useState(false);
+  const [categoryDisplay, setCategoryDisplay] = useState("hidden");
+
+  const [mainDisplay, setMainDisplay] = useState("");
 
   const tName = useRef();
   const tValue = useRef();
@@ -24,6 +30,16 @@ const TransactionDetail = ({ onDelete, setTransactions }) => {
 
   const tList = loadTransaction();
   const indexToEdit = tList.findIndex((t) => t.id == transactionId);
+
+  useEffect(() => {
+    if (categoryInput == true) {
+      setCategoryDisplay("");
+      setMainDisplay("hidden");
+    } else if (categoryInput == false) {
+      setCategoryDisplay("hidden");
+      setMainDisplay("");
+    }
+  }, [categoryInput]);
 
   const handleChange = (value) => {
     setTipo((prev) => (prev === value ? null : value));
@@ -60,6 +76,7 @@ const TransactionDetail = ({ onDelete, setTransactions }) => {
       value: Number(correctValue),
       type: type,
       date: date,
+      category: selectedCategory,
     };
 
     const updatedList = [...tList];
@@ -93,7 +110,13 @@ const TransactionDetail = ({ onDelete, setTransactions }) => {
 
   return (
     <>
-      <section className="relative h-screen">
+      <div className={`${categoryDisplay}`}>
+        <CategoryList
+          setCategoryInput={setCategoryInput}
+          setSelectedCategory={setSelectedCategory}
+        />
+      </div>
+      <section className={`relative h-screen ${mainDisplay}`}>
         <div className="border w-[90%] flex flex-col justify-center items-center absolute top-[40%] left-[50%] -translate-x-1/2 -translate-y-1/2 rounded-xl outline-0 shadow-xl transition-shadow duration-300 border-stone-400">
           <button
             className="rounded-xl p-1.5 absolute top-2 right-2 bg-red-200 font-bold text-white hover:scale-105 active:scale-95 transition-all cursor-pointer"
@@ -145,6 +168,23 @@ const TransactionDetail = ({ onDelete, setTransactions }) => {
                 setValueText(val);
               }}
             />
+          </div>
+
+          <div
+            className="bg-white p-3 w-82 rounded-xl outline-0 shadow-xl hover:shadow-2xl transition-shadow duration-300 flex gap-6 items-center justify-center mt-2 cursor-pointer"
+            onClick={() => {
+              setCategoryInput(true);
+            }}
+          >
+            <div className="flex w-full justify-between">
+              {!selectedCategory && <p>Categorias</p>}
+              {!selectedCategory && <ChevronsRight />}
+              {selectedCategory && (
+                <div className="flex justify-between w-full relative">
+                  {selectedCategory} <Edit />
+                </div>
+              )}
+            </div>
           </div>
 
           <div className="bg-white p-3 w-82 rounded-xl outline-0 shadow-xl hover:shadow-2xl transition-shadow duration-300 flex gap-6 items-center justify-center mt-2">
