@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { loadCaterogy, saveCategory } from "../../services/storage";
-import BottomNav from "../components/BottomNav";
+
 import { CircleCheckBig, CornerUpLeft, SquarePen, X } from "lucide-react";
 
 const CategoryList = ({ setCategoryInput, setSelectedCategory }) => {
@@ -50,7 +50,6 @@ const CategoryList = ({ setCategoryInput, setSelectedCategory }) => {
           <div>{renderList}</div>
         </div>
       </section>
-      <BottomNav />
     </>
   );
 };

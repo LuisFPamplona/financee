@@ -2,7 +2,6 @@ import { Check, ChevronsRight, Edit, X } from "lucide-react";
 import { use, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { saveTransaction } from "../../services/storage";
-import BottomNav from "../components/BottomNav";
 import DateInput from "../components/DateInput";
 import CategoryList from "./CategoryList";
 
@@ -231,7 +230,6 @@ const AddTransaction = ({ transactions, setTransactions }) => {
           </div>
         </div>
       </section>
-      <BottomNav />
     </>
   );
 };
