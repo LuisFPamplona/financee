@@ -1,7 +1,7 @@
 
 import TransactionList from "../components/TransactionList.jsx";
 import MonthSelector from "../components/MonthSelector.jsx";
-import BottomNav from "../components/BottomNav.jsx";
+
 
 const Dashboard = ({ balance, transactions }) => {
   return (
@@ -21,9 +21,7 @@ const Dashboard = ({ balance, transactions }) => {
         <div className="w-full flex items-center justify-center">
           <TransactionList transactions={transactions} />
         </div>
-        <div>
-          <BottomNav />
-        </div>
+
       </section>
     </>
   );

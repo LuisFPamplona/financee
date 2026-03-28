@@ -1,7 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { loadTransaction, saveTransaction } from "../../services/storage";
-import { useActionState, useEffect, useRef, useState } from "react";
-import BottomNav from "../components/BottomNav.jsx";
+import { useEffect, useRef, useState } from "react";
 import DateInput from "../components/DateInput.jsx";
 import { Check, ChevronsRight, Edit, Trash2, X } from "lucide-react";
 import CategoryList from "./CategoryList.jsx";
@@ -245,7 +244,6 @@ const TransactionDetail = ({ onDelete, setTransactions }) => {
           </div>
         </div>
       </section>
-      <BottomNav />
     </>
   );
 };

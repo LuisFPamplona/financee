@@ -6,7 +6,9 @@ import { useEffect, useState } from "react";
 import { balanceAdjust } from "../utils/balance";
 import { loadTransaction, saveTransaction } from "../services/storage";
 import TransactionDetail from "./pages/TransactionDetail";
-
+import Header from "./components/Header";
+import Statistic from "./pages/Statistic";
+import BottomNav from "./components/BottomNav";
 
 function App() {
   const [transactions, setTransactions] = useState(() => {
@@ -32,6 +34,7 @@ function App() {
   return (
     <>
       <Router>
+        <Header />
         <Routes>
           <Route
             path="/"
@@ -63,7 +66,9 @@ function App() {
               />
             }
           />
+          <Route path="/statistic" element={<Statistic />} />
         </Routes>
+        <BottomNav />
       </Router>
     </>
   );

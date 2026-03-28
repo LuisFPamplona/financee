@@ -1,4 +1,14 @@
-import { Home, Search, Plus, Bell, User, ChartBarStacked } from "lucide-react";
+import {
+  Home,
+  Search,
+  Plus,
+  Bell,
+  User,
+  ChartBarStacked,
+  Settings,
+  CircleQuestionMark,
+  ChartPie,
+} from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 function BottomNav() {
@@ -13,8 +23,11 @@ function BottomNav() {
         <span></span>
       </button>
 
-      <button className="flex flex-col items-center text-gray-500 text-xs hover:text-black transition cursor-pointer p-3">
-        <ChartBarStacked size={20} />
+      <button
+        className="flex flex-col items-center text-gray-500 text-xs hover:text-black transition cursor-pointer p-3"
+        onClick={() => navigate("/statistic")}
+      >
+        <ChartPie size={20} />
         <span></span>
       </button>
 
@@ -26,12 +39,12 @@ function BottomNav() {
       </button>
 
       <button className="flex flex-col items-center text-gray-500 text-xs hover:text-black transition cursor-pointer p-3">
-        <Bell size={20} />
+        <Settings size={20} />
         <span></span>
       </button>
 
       <button className="flex flex-col items-center text-gray-500 text-xs hover:text-black transition cursor-pointer p-3">
-        <User size={20} />
+        <CircleQuestionMark size={20} />
         <span></span>
       </button>
     </nav>
