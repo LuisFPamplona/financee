@@ -88,8 +88,8 @@ const AddTransaction = ({ transactions, setTransactions }) => {
         />
       </div>
 
-      <section className={`relative h-screen ${mainDisplay}`}>
-        <div className="border w-[90%] flex flex-col justify-center items-center absolute top-[40%] left-[50%] -translate-x-1/2 -translate-y-1/2 rounded-xl outline-0 shadow-xl transition-shadow duration-300 border-stone-400">
+      <section className={`relative h-140 ${mainDisplay}`}>
+        <div className="border w-[90%] flex flex-col justify-center items-center absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 rounded-xl outline-0 shadow-xl transition-shadow duration-300 border-stone-400">
           <div className="w-82 flex justify-center mt-2 mb-2">
             <span className="text-2xl">Nova transaçao</span>
           </div>
