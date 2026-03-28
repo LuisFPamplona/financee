@@ -94,6 +94,8 @@ const TransactionDetail = ({ onDelete, setTransactions }) => {
       (element) => element.id == transactionId,
     );
 
+    setSelectedCategory(found.category);
+
     const formatted = {
       ...found,
       value:
@@ -115,8 +117,8 @@ const TransactionDetail = ({ onDelete, setTransactions }) => {
           setSelectedCategory={setSelectedCategory}
         />
       </div>
-      <section className={`relative h-screen ${mainDisplay}`}>
-        <div className="border w-[90%] flex flex-col justify-center items-center absolute top-[40%] left-[50%] -translate-x-1/2 -translate-y-1/2 rounded-xl outline-0 shadow-xl transition-shadow duration-300 border-stone-400">
+      <section className={`relative h-140 ${mainDisplay}`}>
+        <div className="border w-[90%] flex flex-col justify-center items-center absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 rounded-xl outline-0 shadow-xl transition-shadow duration-300 border-stone-400">
           <button
             className="rounded-xl p-1.5 absolute top-2 right-2 bg-red-200 font-bold text-white hover:scale-105 active:scale-95 transition-all cursor-pointer"
             onClick={() => {

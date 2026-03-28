@@ -66,7 +66,10 @@ function App() {
               />
             }
           />
-          <Route path="/statistic" element={<Statistic />} />
+          <Route
+            path="/statistic"
+            element={<Statistic transactions={transactions} />}
+          />
         </Routes>
         <BottomNav />
       </Router>

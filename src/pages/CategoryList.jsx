@@ -12,17 +12,32 @@ const CategoryList = ({ setCategoryInput, setSelectedCategory }) => {
     saveCategory(categoryList);
   }, [categoryList]);
 
+  const COLORS = [
+    "#22c55e",
+    "#ef4444",
+    "#3b82f6",
+    "#f59e0b",
+    "#a855f7",
+    "#14b8a6",
+  ];
+
   const renderList = categoryList.map((item, index) => {
     return (
       <div
-        className="w-82 flex justify-between mt-2 mb-2 bg-white p-3 rounded-xl outline-0 shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
+        className="flex border justify-between items-center gap-4 border-gray-400 mt-2 bg-white p-3 w-82 rounded-xl outline-0 shadow-xl hover:shadow-2xl transition-all duration-300 cursor-pointer hover:scale-100 active:scale-98 "
         key={index}
         onClick={() => {
           setSelectedCategory(item);
           setCategoryInput(false);
         }}
       >
-        {item}
+        <div className="flex items-center gap-2">
+          <div
+            className="w-4 h-4 rounded-sm"
+            style={{ backgroundColor: COLORS[index % COLORS.length] }}
+          />
+          {item}
+        </div>
         <CircleCheckBig color="gray" />
       </div>
     );
@@ -30,17 +45,11 @@ const CategoryList = ({ setCategoryInput, setSelectedCategory }) => {
 
   return (
     <>
-      <section className="relative h-screen">
-        <div className="border w-90 flex flex-col justify-center items-center absolute top-[40%] left-[50%] -translate-x-1/2 -translate-y-1/2 rounded-xl outline-0 shadow-xl transition-shadow duration-300 border-stone-400">
+      <section className="relative h-140">
+        <div className="border w-90 h-115 flex flex-col justify-center items-center absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 rounded-xl outline-0 shadow-xl transition-shadow duration-300 border-stone-400">
           <div className="w-82 flex justify-center items-center mt-2 mb-2">
             <span
-              className="absolute left-3.5 top-2 cursor-pointer bg-gray-100 p-2 rounded-full hover:scale-105 active:scale-95"
-              onClick={() => alert("Funçao em desenvolvimento")}
-            >
-              <SquarePen color="black" />
-            </span>
-            <span
-              className="absolute right-3.5 top-2 cursor-pointer bg-gray-100 p-2 rounded-full hover:scale-105 active:scale-95"
+              className="absolute right-3.5 top-7 cursor-pointer bg-gray-100 p-2 rounded-full hover:scale-105 active:scale-95"
               onClick={() => setCategoryInput(false)}
             >
               <CornerUpLeft color="black" />
