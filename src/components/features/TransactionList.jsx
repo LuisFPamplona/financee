@@ -4,7 +4,7 @@ import NothingHere from "../ui/NothingHere";
 import AddTransactionArrow from "../ui/AddTransactionArrow";
 import TransactionItem from "./TransactionItem";
 
-const TransactionList = ({ transactions }) => {
+const TransactionList = ({ transactions, visible }) => {
   const navigate = useNavigate();
 
   const transactionList = transactions.map((item, index) => {
@@ -20,6 +20,7 @@ const TransactionList = ({ transactions }) => {
           name={item.name}
           type={item.type}
           category={item.category}
+          visible={visible}
         />
       </div>
     );
