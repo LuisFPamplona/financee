@@ -1,4 +1,5 @@
-import TransactionList from "../components/TransactionList.jsx";
+import TransactionList from "../components/features/TransactionList";
+import { formatCurrency } from "../../utils/formatCurrency.js";
 
 const Dashboard = ({ balance, transactions }) => {
   return (
@@ -9,10 +10,7 @@ const Dashboard = ({ balance, transactions }) => {
             Saldo total
           </p>
           <div className="flex justify-center items-baseline gap-1 font-bold text-white text-4xl">
-            {balance.toLocaleString("pt-BR", {
-              style: "currency",
-              currency: "BRL",
-            })}
+            {formatCurrency(balance)}
           </div>
         </div>
 

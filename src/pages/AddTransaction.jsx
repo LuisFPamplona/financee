@@ -1,15 +1,22 @@
-import { Check, ChevronsRight, Edit, X } from "lucide-react";
-import { use, useEffect, useRef, useState } from "react";
+import { Check, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { saveTransaction } from "../../services/storage";
-import DateInput from "../components/DateInput";
+import DateInput from "../components/inputs/DateInput";
 import CategoryList from "./CategoryList";
+import InputName from "../components/inputs/InputName";
+import InputValue from "../components/inputs/InputValue";
+import CategoryInput from "../components/inputs/CategoryInput";
 
 const AddTransaction = ({ transactions, setTransactions }) => {
   const incomeInput = useRef();
   const outcomeInput = useRef();
   const valueInput = useRef("");
   const nameInput = useRef("");
+
+  const dayInputRef = useRef();
+  const monthInputRef = useRef();
+  const yearInputRef = useRef();
 
   const [dayInput, setDayInput] = useState();
   const [monthInput, setMonthInput] = useState();
@@ -93,56 +100,18 @@ const AddTransaction = ({ transactions, setTransactions }) => {
           <div className="w-82 flex justify-center mt-2 mb-2">
             <span className="text-2xl">Nova transaçao</span>
           </div>
-          <div className="w-82">
-            <input
-              type="text"
-              className="bg-white p-3 w-full rounded-xl outline-0 shadow-xl hover:shadow-2xl transition-shadow duration-300 mt-2"
-              placeholder="Nome"
-              ref={nameInput}
-            />
-          </div>
+          <InputName nameInput={nameInput} />
 
-          <div className="flex items-baseline gap-1  mt-2 bg-white p-3 w-82 rounded-xl outline-0 shadow-xl hover:shadow-2xl transition-shadow duration-300 ">
-            <p className="bg-white">R$</p>
+          <InputValue
+            valueText={valueText}
+            valueInput={valueInput}
+            setValueText={setValueText}
+          />
 
-            <input
-              type="text"
-              value={valueText}
-              onChange={(e) => {
-                let val = e.target.value;
-                val = val.replace(/[^0-9,]/g, "");
-                const parts = val.split(",");
-                if (parts.length > 2) {
-                  val = parts[0] + "," + parts.slice(1).join("");
-                }
-                if (val.includes(",")) {
-                  const [inteiro, decimal] = val.split(",");
-                  val = inteiro + "," + decimal.slice(0, 2);
-                }
-                setValueText(val);
-              }}
-              placeholder="0,00"
-              className="outline-0 text-xl"
-              ref={valueInput}
-            />
-          </div>
-
-          <div
-            className="bg-white p-3 w-82 rounded-xl outline-0 shadow-xl hover:shadow-2xl transition-shadow duration-300 flex gap-6 items-center justify-center mt-2 cursor-pointer"
-            onClick={() => {
-              setCategoryInput(true);
-            }}
-          >
-            <div className="flex w-full justify-between">
-              {!selectedCategory && <p>Categorias</p>}
-              {!selectedCategory && <ChevronsRight />}
-              {selectedCategory && (
-                <div className="flex justify-between w-full relative">
-                  {selectedCategory} <Edit />
-                </div>
-              )}
-            </div>
-          </div>
+          <CategoryInput
+            setCategoryInput={setCategoryInput}
+            selectedCategory={selectedCategory}
+          />
 
           <div className="bg-white p-3 w-82 rounded-xl outline-0 shadow-xl hover:shadow-2xl transition-shadow duration-300 flex gap-6 items-center justify-center mt-2">
             <div className="flex justify-center items-center gap-1">
@@ -180,13 +149,15 @@ const AddTransaction = ({ transactions, setTransactions }) => {
             </div>
           </div>
 
-          <div className="mt-2">
-            <DateInput
-              setDayInput={setDayInput}
-              setMonthInput={setMonthInput}
-              setYearInput={setYearInput}
-            />
-          </div>
+          <DateInput
+            dayInput={dayInputRef}
+            monthInput={monthInputRef}
+            yearInput={yearInputRef}
+            setDayInput={setDayInput}
+            setMonthInput={setMonthInput}
+            setYearInput={setYearInput}
+            defaultDate=""
+          />
 
           <div className="flex w-82 justify-between mt-2 mb-2">
             <button
@@ -219,7 +190,11 @@ const AddTransaction = ({ transactions, setTransactions }) => {
                     name: nameInput.current.value,
                     value: valueInput.current.value,
                     type: transactionType,
-                    date: dayInput + "/" + monthInput + "/" + yearInput,
+                    date: {
+                      day: dayInput,
+                      month: monthInput,
+                      year: yearInput,
+                    },
                   };
                   sendTransaction(data);
                 }

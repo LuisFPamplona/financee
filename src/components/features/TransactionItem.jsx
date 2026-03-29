@@ -1,3 +1,5 @@
+import { formatCurrency } from "../../../utils/formatCurrency.js";
+
 const TransactionItem = ({ value, date, name, type, category }) => {
   const typeColor = type === "income" ? "text-green-400" : "text-red-400";
 
@@ -15,14 +17,13 @@ const TransactionItem = ({ value, date, name, type, category }) => {
           >
             <div>
               <p className=" text-white text-sm">{category}</p>
-              <p className=" text-white text-sm">{date}</p>
+              <p className=" text-white text-sm">
+                {date.day}/{date.month}/{date.year}
+              </p>
             </div>
             <div className="flex text-white items-baseline gap-1">
               <p className={`text-2xl ${typeColor} tracking-wide`}>
-                {value.toLocaleString("pt-BR", {
-                  style: "currency",
-                  currency: "BRL",
-                })}
+                {formatCurrency(value)}
               </p>
             </div>
           </div>

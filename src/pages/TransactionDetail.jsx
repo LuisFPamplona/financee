@@ -1,9 +1,12 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { loadTransaction, saveTransaction } from "../../services/storage";
 import { useEffect, useRef, useState } from "react";
-import DateInput from "../components/DateInput.jsx";
-import { Check, ChevronsRight, Edit, Trash2, X } from "lucide-react";
+import { Check, Trash2, X } from "lucide-react";
 import CategoryList from "./CategoryList.jsx";
+import InputName from "../components/inputs/InputName.jsx";
+import DateInput from "../components/inputs/DateInput.jsx";
+import InputValue from "../components/inputs/InputValue.jsx";
+import CategoryInput from "../components/inputs/CategoryInput.jsx";
 
 const TransactionDetail = ({ onDelete, setTransactions }) => {
   const { transactionId } = useParams();
@@ -11,15 +14,16 @@ const TransactionDetail = ({ onDelete, setTransactions }) => {
 
   const [transaction, setTransaction] = useState(null);
   const [tipo, setTipo] = useState(null);
-  const [dayInput, setDayInput] = useState();
-  const [monthInput, setMonthInput] = useState();
-  const [yearInput, setYearInput] = useState();
   const [valueText, setValueText] = useState();
   const [selectedCategory, setSelectedCategory] = useState();
   const [categoryInput, setCategoryInput] = useState(false);
   const [categoryDisplay, setCategoryDisplay] = useState("hidden");
 
   const [mainDisplay, setMainDisplay] = useState("");
+
+  const dayInput = useRef();
+  const monthInput = useRef();
+  const yearInput = useRef();
 
   const tName = useRef();
   const tValue = useRef();
@@ -135,58 +139,19 @@ const TransactionDetail = ({ onDelete, setTransactions }) => {
           <div className="w-82 flex justify-center mt-2 mb-6">
             <span className="text-2xl">Editar transaçao</span>
           </div>
-          <div className="w-82">
-            <input
-              type="text"
-              ref={tName}
-              className="bg-white p-3 w-full rounded-xl outline-0 shadow-xl hover:shadow-2xl transition-shadow duration-300 mt-2"
-              placeholder="Nome"
-              defaultValue={transaction.name}
-            />
-          </div>
+          <InputName nameInput={tName} defaultValue={transaction.name} />
 
-          <div className="flex items-baseline gap-1  mt-2 bg-white p-3 w-82 rounded-xl outline-0 shadow-xl hover:shadow-2xl transition-shadow duration-300 ">
-            <p className="bg-white">R$</p>
+          <InputValue
+            valueInput={tValue}
+            defaultValue={transaction.value}
+            setValueText={setValueText}
+            valueText={valueText}
+          />
 
-            <input
-              type="text"
-              ref={tValue}
-              defaultValue={transaction.value}
-              value={valueText}
-              placeholder="0,00"
-              className="outline-0 text-xl"
-              onChange={(e) => {
-                let val = e.target.value;
-                val = val.replace(/[^0-9,]/g, "");
-                const parts = val.split(",");
-                if (parts.length > 2) {
-                  val = parts[0] + "," + parts.slice(1).join("");
-                }
-                if (val.includes(",")) {
-                  const [inteiro, decimal] = val.split(",");
-                  val = inteiro + "," + decimal.slice(0, 2);
-                }
-                setValueText(val);
-              }}
-            />
-          </div>
-
-          <div
-            className="bg-white p-3 w-82 rounded-xl outline-0 shadow-xl hover:shadow-2xl transition-shadow duration-300 flex gap-6 items-center justify-center mt-2 cursor-pointer"
-            onClick={() => {
-              setCategoryInput(true);
-            }}
-          >
-            <div className="flex w-full justify-between">
-              {!selectedCategory && <p>Categorias</p>}
-              {!selectedCategory && <ChevronsRight />}
-              {selectedCategory && (
-                <div className="flex justify-between w-full relative">
-                  {selectedCategory} <Edit />
-                </div>
-              )}
-            </div>
-          </div>
+          <CategoryInput
+            setCategoryInput={setCategoryInput}
+            selectedCategory={selectedCategory}
+          />
 
           <div className="bg-white p-3 w-82 rounded-xl outline-0 shadow-xl hover:shadow-2xl transition-shadow duration-300 flex gap-6 items-center justify-center mt-2">
             <div className="flex justify-center items-center gap-1">
@@ -213,9 +178,9 @@ const TransactionDetail = ({ onDelete, setTransactions }) => {
           <div className="mt-2">
             <DateInput
               defaultDate={transaction.date}
-              setDayInput={setDayInput}
-              setMonthInput={setMonthInput}
-              setYearInput={setYearInput}
+              dayInput={dayInput}
+              monthInput={monthInput}
+              yearInput={yearInput}
             />
           </div>
 
@@ -229,16 +194,20 @@ const TransactionDetail = ({ onDelete, setTransactions }) => {
             <button
               className="bg-gray-800 rounded-2xl p-1 active:scale-95 cursor-pointer hover:scale-105 transition-all"
               onClick={() => {
-                if (!dayInput || !monthInput || !yearInput) {
-                  alert("erro");
+                if (
+                  !dayInput.current.value ||
+                  !monthInput.current.value ||
+                  !yearInput.current.value
+                ) {
+                  alert("erro na data");
                 }
 
                 const value = tValue.current.value.replace(",", ".");
-                sendChanges(
-                  tName.current.value,
-                  Number(value),
-                  dayInput + "/" + monthInput + "/" + yearInput,
-                );
+                sendChanges(tName.current.value, Number(value), {
+                  day: dayInput.current.value,
+                  month: monthInput.current.value,
+                  year: yearInput.current.value,
+                });
               }}
             >
               <Check color="white" width={48} height={48} />
