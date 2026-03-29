@@ -48,7 +48,7 @@ function App() {
             }
           />
           <Route
-            path="/AddTransaction"
+            path="/add-transaction"
             element={
               <AddTransaction
                 transactions={transactions}
