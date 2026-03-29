@@ -1,14 +1,15 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Dashboard from "./pages/DashBoard";
+import Dashboard from "./pages/Dashboard";
 import AddTransaction from "./pages/AddTransaction";
 import { useEffect, useState } from "react";
 import { balanceAdjust } from "../utils/balance";
 import { loadTransaction, saveTransaction } from "../services/storage";
 import TransactionDetail from "./pages/TransactionDetail";
-import Header from "./components/Header";
 import Statistic from "./pages/Statistic";
-import BottomNav from "./components/BottomNav";
+import Header from "./components/ui/Header";
+import BottomNav from "./components/ui/BottomNav";
+import Calendar from "./pages/Calendar";
 
 function App() {
   const [transactions, setTransactions] = useState(() => {
@@ -69,6 +70,10 @@ function App() {
           <Route
             path="/statistic"
             element={<Statistic transactions={transactions} />}
+          />
+          <Route
+            path="/calendar"
+            element={<Calendar transactions={transactions} />}
           />
         </Routes>
         <BottomNav />

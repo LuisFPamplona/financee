@@ -1,25 +1,15 @@
-import { useRef, useEffect } from "react";
-
 const DateInput = ({
+  dayInput,
+  monthInput,
+  yearInput,
+  defaultDate,
   setDayInput,
   setMonthInput,
   setYearInput,
-  defaultDate,
 }) => {
-  const dayInput = useRef();
-  const monthInput = useRef();
-  const yearInput = useRef();
-
-  useEffect(() => {
-    if (defaultDate) {
-      setDayInput(defaultDate.slice(0, 2));
-      setMonthInput(defaultDate.slice(3, 5));
-      setYearInput(defaultDate.slice(6));
-    }
-  }, [defaultDate]);
   return (
     <>
-      <div className="bg-white pb-2 w-82 rounded-xl outline-0 shadow-xl hover:shadow-2xl transition-shadow duration-300 flex flex-col justify-center items-center gap-2">
+      <div className="bg-white pb-2 w-82 mt-2 rounded-xl outline-0 shadow-xl hover:shadow-2xl transition-shadow duration-300 flex flex-col justify-center items-center gap-2">
         <span>Data da transaçao</span>
         <div className="flex gap-4">
           <div className="border w-16 h-17 rounded-2xl">
@@ -37,7 +27,7 @@ const DateInput = ({
                 setDayInput(val);
               }}
               ref={dayInput}
-              defaultValue={defaultDate ? defaultDate.slice(0, 2) : ""}
+              defaultValue={defaultDate.day ? defaultDate.day : ""}
               type="text"
               inputMode="numeric"
               className="w-16 p-1 outline-0 text-center text-2xl"
@@ -59,7 +49,7 @@ const DateInput = ({
                 setMonthInput(val);
               }}
               ref={monthInput}
-              defaultValue={defaultDate ? defaultDate.slice(3, 5) : ""}
+              defaultValue={defaultDate.month ? defaultDate.month : ""}
               type="text"
               inputMode="numeric"
               className="w-16 p-1 outline-0 text-center text-2xl"
@@ -81,7 +71,7 @@ const DateInput = ({
                 setYearInput(val);
               }}
               ref={yearInput}
-              defaultValue={defaultDate ? defaultDate.slice(6) : ""}
+              defaultValue={defaultDate.year ? defaultDate.year : ""}
               type="text"
               inputMode="numeric"
               className="w-16 p-1 outline-0 text-center text-2xl"

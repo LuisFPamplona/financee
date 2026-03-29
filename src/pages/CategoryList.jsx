@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { loadCaterogy, saveCategory } from "../../services/storage";
-
-import { CircleCheckBig, CornerUpLeft, SquarePen, X } from "lucide-react";
+import { CircleCheckBig, CornerUpLeft } from "lucide-react";
 
 const CategoryList = ({ setCategoryInput, setSelectedCategory }) => {
   const [categoryList, setCategoryList] = useState(() => {

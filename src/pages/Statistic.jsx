@@ -1,4 +1,5 @@
 import { BrushCleaning, ListPlus, Wind } from "lucide-react";
+import { formatCurrency } from "../../utils/formatCurrency.js";
 
 const Statistic = ({ transactions }) => {
   const grouped = transactions.reduce((acc, t) => {
@@ -50,21 +51,13 @@ const Statistic = ({ transactions }) => {
           <div className="mt-2 flex justify-between gap-2 pr-3.5 pl-3.5 text-center">
             <div className=" bg-green-400 p-3 w-41 rounded-xl">
               <span className="font-bold">+</span>
-              <span className="font-bold">
-                {totals.income.toLocaleString("pt-BR", {
-                  style: "currency",
-                  currency: "BRL",
-                })}
-              </span>
+              <span className="font-bold">{formatCurrency(totals.income)}</span>
             </div>
 
             <div className=" bg-red-400 p-3 w-41 rounded-xl">
               <span className="font-bold">-</span>
               <span className="font-bold">
-                {totals.outcome.toLocaleString("pt-BR", {
-                  style: "currency",
-                  currency: "BRL",
-                })}
+                {formatCurrency(totals.outcome)}
               </span>
             </div>
           </div>
@@ -82,10 +75,7 @@ const Statistic = ({ transactions }) => {
                   />
                   <span className="text-sm">{entry.name}</span>
                   <span className="text-1xl ml-auto">
-                    {entry.value.toLocaleString("pt-BR", {
-                      style: "currency",
-                      currency: "BRL",
-                    })}
+                    {formatCurrency(entry.value)}
                   </span>
                   <span className="p-1">
                     <ListPlus color="gray" />
