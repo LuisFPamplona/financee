@@ -10,12 +10,15 @@ import Statistic from "./pages/Statistic";
 import Header from "./components/ui/Header";
 import BottomNav from "./components/ui/BottomNav";
 import Calendar from "./pages/Calendar";
+import NotFoundPage from "./components/ui/NotFoundPage";
 
 function App() {
   const [transactions, setTransactions] = useState(() => {
     return loadTransaction();
   });
+
   const [balance, setBalance] = useState(0);
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
     setBalance(() => balanceAdjust(transactions));
@@ -41,6 +44,8 @@ function App() {
             path="/"
             element={
               <Dashboard
+                visible={visible}
+                setVisible={setVisible}
                 balance={balance}
                 transactions={transactions}
                 deleteTransaction={deleteTransaction}
@@ -69,12 +74,25 @@ function App() {
           />
           <Route
             path="/statistic"
-            element={<Statistic transactions={transactions} />}
+            element={
+              <Statistic
+                transactions={transactions}
+                visible={visible}
+                setVisible={setVisible}
+              />
+            }
           />
           <Route
             path="/calendar"
-            element={<Calendar transactions={transactions} />}
+            element={
+              <Calendar
+                transactions={transactions}
+                visible={visible}
+                setVisible={setVisible}
+              />
+            }
           />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
         <BottomNav />
       </Router>

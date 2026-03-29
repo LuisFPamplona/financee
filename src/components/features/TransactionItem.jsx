@@ -1,6 +1,6 @@
 import { formatCurrency } from "../../../utils/formatCurrency.js";
 
-const TransactionItem = ({ value, date, name, type, category }) => {
+const TransactionItem = ({ value, date, name, type, category, visible }) => {
   const typeColor = type === "income" ? "text-green-400" : "text-red-400";
 
   return (
@@ -22,9 +22,16 @@ const TransactionItem = ({ value, date, name, type, category }) => {
               </p>
             </div>
             <div className="flex text-white items-baseline gap-1">
-              <p className={`text-2xl ${typeColor} tracking-wide`}>
-                {formatCurrency(value)}
-              </p>
+              <div className={`text-2xl ${typeColor} tracking-wide`}>
+                {visible && <span>{formatCurrency(value)}</span>}
+                {!visible && (
+                  <div>
+                    <p className="w-36 text-white flex items-center gap-2">
+                      R$ <span className="bg-zinc-800 w-48 h-8 mt-1" />
+                    </p>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>

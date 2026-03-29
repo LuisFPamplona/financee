@@ -1,11 +1,12 @@
 import { ArrowUpDown, ChevronLeft, ChevronRight } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TransactionItem from "../components/features/TransactionItem";
 import NothingHere from "../components/ui/NothingHere";
 import { useNavigate } from "react-router-dom";
 import { formatCurrency } from "../../utils/formatCurrency";
+import EyeButton from "../components/features/EyeButton";
 
-const Calendar = ({ transactions }) => {
+const Calendar = ({ transactions, visible, setVisible }) => {
   const navigate = useNavigate();
 
   const [sortType, setSortType] = useState("start");
@@ -100,6 +101,7 @@ const Calendar = ({ transactions }) => {
           name={item.name}
           type={item.type}
           category={item.category}
+          visible={visible}
         />
       </div>
     );
@@ -163,19 +165,42 @@ const Calendar = ({ transactions }) => {
           >
             <ChevronRight size={30} />
           </button>
+          <span className="pt-2">
+            <EyeButton visible={visible} setVisible={setVisible} />
+          </span>
         </div>
 
         <div className="w-92 flex justify-between h-18 items-center">
           <div className="mt-2 flex justify-between gap-2 pr-3.5 pl-3.5 text-center">
-            <div className=" bg-green-400 p-3 w-32 rounded-xl">
+            <div className="flex bg-green-400 p-3 w-32 rounded-xl">
               <span className="font-bold">+</span>
-              <span className="font-bold">{formatCurrency(totals.income)}</span>
+              <span className="font-bold">
+                {visible && <span>{formatCurrency(totals.income)}</span>}
+                {!visible && (
+                  <span>
+                    <div>
+                      <p className="w-24  flex items-center gap-2">
+                        R$ <span className="bg-green-300 w-48 h-5 mt-1" />
+                      </p>
+                    </div>
+                  </span>
+                )}
+              </span>
             </div>
 
-            <div className=" bg-red-400 p-3 w-32 rounded-xl">
+            <div className="flex bg-red-400 p-3 w-32 rounded-xl">
               <span className="font-bold">-</span>
               <span className="font-bold">
-                {formatCurrency(totals.outcome)}
+                {visible && <span>{formatCurrency(totals.outcome)}</span>}
+                {!visible && (
+                  <span>
+                    <div>
+                      <p className="w-24 flex items-center gap-2">
+                        R$ <span className="bg-red-300 w-48 h-5 mt-1" />
+                      </p>
+                    </div>
+                  </span>
+                )}
               </span>
             </div>
           </div>

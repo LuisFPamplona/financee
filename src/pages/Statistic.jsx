@@ -1,7 +1,8 @@
 import { BrushCleaning, ListPlus, Wind } from "lucide-react";
 import { formatCurrency } from "../../utils/formatCurrency.js";
+import EyeButton from "../components/features/EyeButton.jsx";
 
-const Statistic = ({ transactions }) => {
+const Statistic = ({ transactions, visible, setVisible }) => {
   const grouped = transactions.reduce((acc, t) => {
     const category = t.category;
 
@@ -42,22 +43,38 @@ const Statistic = ({ transactions }) => {
   ];
   return (
     <>
-      <section className="relative h-140">
-        <div className="border w-[90%] h-132 flex flex-col justify-center items-center absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 rounded-xl outline-0 shadow-xl transition-shadow duration-300 border-stone-400">
-          <div className="flex justify-center items-center pt-2 pb-2">
-            <p className="text-2xl">Estatísticas</p>
-          </div>
-
+      <section className="flex  flex-col items-center gap-2 h-140">
+        <div className="flex items-center justify-between p-4 bg-zinc-900 w-full h-18">
+          <p className="text-2xl text-white">Estatísticas</p>
+          <p>
+            <EyeButton visible={visible} setVisible={setVisible} />
+          </p>
+        </div>
+        <div className="border w-[90%] h-120 flex flex-col justify-center items-center rounded-xl outline-0 shadow-xl transition-shadow duration-300 border-stone-400">
           <div className="mt-2 flex justify-between gap-2 pr-3.5 pl-3.5 text-center">
-            <div className=" bg-green-400 p-3 w-41 rounded-xl">
+            <div className="flex items-center gap-1 bg-green-400 p-3 w-41 rounded-xl">
               <span className="font-bold">+</span>
-              <span className="font-bold">{formatCurrency(totals.income)}</span>
+              <span className="font-bold">
+                {visible && <span>{formatCurrency(totals.income)}</span>}
+                {!visible && (
+                  <div className="flex items-center gap-1">
+                    <span>R$</span>
+                    <div className="bg-green-300 w-24 h-4" />
+                  </div>
+                )}
+              </span>
             </div>
 
-            <div className=" bg-red-400 p-3 w-41 rounded-xl">
+            <div className="flex items-center gap-1 bg-red-400 p-3 w-41 rounded-xl">
               <span className="font-bold">-</span>
               <span className="font-bold">
-                {formatCurrency(totals.outcome)}
+                {visible && <span>{formatCurrency(totals.outcome)}</span>}
+                {!visible && (
+                  <div className="flex items-center gap-1">
+                    <span>R$</span>
+                    <div className="bg-red-300 w-24 h-4" />
+                  </div>
+                )}
               </span>
             </div>
           </div>
@@ -75,7 +92,13 @@ const Statistic = ({ transactions }) => {
                   />
                   <span className="text-sm">{entry.name}</span>
                   <span className="text-1xl ml-auto">
-                    {formatCurrency(entry.value)}
+                    {visible && <p>{formatCurrency(entry.value)}</p>}
+                    {!visible && (
+                      <div className="flex items-center gap-1">
+                        <span>R$</span>
+                        <div className="bg-neutral-200 w-18 h-4" />
+                      </div>
+                    )}
                   </span>
                   <span className="p-1">
                     <ListPlus color="gray" />

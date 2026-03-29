@@ -1,3 +1,5 @@
+import { getToday } from "../../../utils/getToday";
+
 const DateInput = ({
   dayInput,
   monthInput,
@@ -7,11 +9,23 @@ const DateInput = ({
   setMonthInput,
   setYearInput,
 }) => {
+  const setDayAsToday = (day, month, year) => {
+    dayInput.current.value = day;
+    setDayInput(day);
+
+    monthInput.current.value = month;
+    setMonthInput(month);
+
+    yearInput.current.value = year;
+    setYearInput(year);
+
+    return console.log(day, month, year);
+  };
   return (
     <>
       <div className="bg-white pb-2 w-82 mt-2 rounded-xl outline-0 shadow-xl hover:shadow-2xl transition-shadow duration-300 flex flex-col justify-center items-center gap-2">
-        <span>Data da transaçao</span>
-        <div className="flex gap-4">
+        <span className="w-full pl-3">Data da transaçao</span>
+        <div className="flex gap-4 items-center">
           <div className="border w-16 h-17 rounded-2xl">
             <span className="text-center flex justify-center text-gray-500">
               Dia
@@ -77,6 +91,17 @@ const DateInput = ({
               className="w-16 p-1 outline-0 text-center text-2xl"
               maxLength={4}
             />
+          </div>
+          <div>
+            <button
+              className="border rounded shadow-2xl p-1 active:scale-98 transition-all cursor-pointer"
+              onClick={() => {
+                const date = getToday();
+                setDayAsToday(date.day, date.month, date.year);
+              }}
+            >
+              <span>Hoje</span>
+            </button>
           </div>
         </div>
       </div>
