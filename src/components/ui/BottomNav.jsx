@@ -43,7 +43,7 @@ function BottomNav() {
       </button>
 
       <button className="flex flex-col items-center text-gray-500 text-xs hover:text-black transition cursor-pointer p-3">
-        <Settings size={20} />
+        <Settings size={20} onClick={() => navigate("/configs")} />
         <span></span>
       </button>
     </nav>

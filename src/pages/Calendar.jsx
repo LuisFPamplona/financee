@@ -120,6 +120,7 @@ const Calendar = ({ transactions, visible, setVisible }) => {
           name={item.name}
           type={item.type}
           category={item.category}
+          visible={visible}
         />
       </div>
     );
@@ -137,7 +138,7 @@ const Calendar = ({ transactions, visible, setVisible }) => {
 
   return (
     <>
-      <section className="flex flex-col w-full items-center  justify-center gap-2 ">
+      <section className="flex flex-col w-full items-center  justify-center ">
         <div className="flex items-center justify-between p-4 bg-zinc-900 w-full h-18">
           <button
             className="bg-white rounded active:scale-98 cursor-pointer"
@@ -165,14 +166,11 @@ const Calendar = ({ transactions, visible, setVisible }) => {
           >
             <ChevronRight size={30} />
           </button>
-          <span className="pt-2">
-            <EyeButton visible={visible} setVisible={setVisible} />
-          </span>
         </div>
 
-        <div className="w-92 flex justify-between h-18 items-center">
-          <div className="mt-2 flex justify-between gap-2 pr-3.5 pl-3.5 text-center">
-            <div className="flex bg-green-400 p-3 w-32 rounded-xl">
+        <div className="w-92 flex justify-between h-14 items-center">
+          <div className="flex justify-between w-full ">
+            <div className="bg-green-400 w-42 h-10 rounded-xl ml-2 flex justify-center items-center">
               <span className="font-bold">+</span>
               <span className="font-bold">
                 {visible && <span>{formatCurrency(totals.income)}</span>}
@@ -188,7 +186,7 @@ const Calendar = ({ transactions, visible, setVisible }) => {
               </span>
             </div>
 
-            <div className="flex bg-red-400 p-3 w-32 rounded-xl">
+            <div className="bg-red-400 w-42 h-10 rounded-xl mr-2 flex justify-center items-center">
               <span className="font-bold">-</span>
               <span className="font-bold">
                 {visible && <span>{formatCurrency(totals.outcome)}</span>}
@@ -204,17 +202,21 @@ const Calendar = ({ transactions, visible, setVisible }) => {
               </span>
             </div>
           </div>
+        </div>
 
+        <div className="bg-zinc-900 w-full flex justify-between pl-4 pr-4 items-center h-16">
           <button
-            className="p-1 active:scale-98 cursor-pointer transition-all flex flex-col justify-center items-center mt-3"
+            className="p-1 active:scale-98 cursor-pointer transition-all"
             onClick={() => {
               const newSort = changeSort(sortType);
               setSortType(newSort);
             }}
           >
-            <ArrowUpDown size={30} />
-            <span className="text-sm">Ordenar</span>
+            <ArrowUpDown color="white" size={30} />
           </button>
+          <span className="pt-2">
+            <EyeButton visible={visible} setVisible={setVisible} />
+          </span>
         </div>
 
         <div className="w-full flex items-center justify-center">
