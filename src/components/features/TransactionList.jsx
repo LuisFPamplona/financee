@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
 import NothingHere from "../ui/NothingHere";
-import AddTransactionArrow from "../ui/AddTransactionArrow";
 import TransactionItem from "./TransactionItem";
 
 const TransactionList = ({ transactions, visible }) => {
@@ -10,7 +9,7 @@ const TransactionList = ({ transactions, visible }) => {
   const transactionList = transactions.map((item, index) => {
     return (
       <div
-        className="w-full cursor-pointer hover:scale-105 active:scale-95 transition-all"
+        className="w-full cursor-pointer transition-all"
         key={index}
         onClick={() => navigate(`/transaction/${item.id}`)}
       >
@@ -31,7 +30,6 @@ const TransactionList = ({ transactions, visible }) => {
       <>
         <div className="flex flex-col gap-70">
           <NothingHere />
-          <AddTransactionArrow />
         </div>
       </>
     );

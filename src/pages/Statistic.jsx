@@ -50,32 +50,40 @@ const Statistic = ({ transactions, visible, setVisible }) => {
             <EyeButton visible={visible} setVisible={setVisible} />
           </p>
         </div>
-        <div className="border w-[90%] h-120 flex flex-col justify-center items-center rounded-xl outline-0 shadow-xl transition-shadow duration-300 border-stone-400">
-          <div className="mt-2 flex justify-between gap-2 pr-3.5 pl-3.5 text-center">
-            <div className="flex items-center gap-1 bg-green-400 p-3 w-41 rounded-xl">
-              <span className="font-bold">+</span>
-              <span className="font-bold">
-                {visible && <span>{formatCurrency(totals.income)}</span>}
-                {!visible && (
-                  <div className="flex items-center gap-1">
-                    <span>R$</span>
-                    <div className="bg-green-300 w-24 h-4" />
-                  </div>
-                )}
-              </span>
-            </div>
+        <div className="border w-[90%] h-115 flex flex-col justify-center items-center rounded-xl outline-0 shadow-xl transition-shadow duration-300 border-stone-400">
+          <div className="w-82 mt-2 flex justify-between h-14 items-center">
+            <div className="flex justify-between w-full ">
+              <div className="bg-green-400 w-36 h-10 rounded-xl ml-2 flex justify-center items-center">
+                <span className="font-bold text-sm">+</span>
+                <span className="font-bold text-sm">
+                  {visible && <span>{formatCurrency(totals.income)}</span>}
+                  {!visible && (
+                    <span>
+                      <div>
+                        <p className="w-24  flex items-center gap-2">
+                          R$ <span className="bg-green-300 w-48 h-5 mt-1" />
+                        </p>
+                      </div>
+                    </span>
+                  )}
+                </span>
+              </div>
 
-            <div className="flex items-center gap-1 bg-red-400 p-3 w-41 rounded-xl">
-              <span className="font-bold">-</span>
-              <span className="font-bold">
-                {visible && <span>{formatCurrency(totals.outcome)}</span>}
-                {!visible && (
-                  <div className="flex items-center gap-1">
-                    <span>R$</span>
-                    <div className="bg-red-300 w-24 h-4" />
-                  </div>
-                )}
-              </span>
+              <div className="bg-red-400 w-36 h-10 rounded-xl mr-2 flex justify-center items-center">
+                <span className="font-bold text-sm">-</span>
+                <span className="font-bold text-sm">
+                  {visible && <span>{formatCurrency(totals.outcome)}</span>}
+                  {!visible && (
+                    <span>
+                      <div>
+                        <p className="w-24 flex items-center gap-2">
+                          R$ <span className="bg-red-300 w-48 h-5 mt-1" />
+                        </p>
+                      </div>
+                    </span>
+                  )}
+                </span>
+              </div>
             </div>
           </div>
 

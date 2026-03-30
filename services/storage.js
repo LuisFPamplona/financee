@@ -2,6 +2,10 @@ export const saveTransaction = (data) => {
   localStorage.setItem("transactionList", JSON.stringify(data));
 };
 
+export const deleteTransactions = () => {
+  localStorage.clear("transactionList");
+};
+
 export const loadTransaction = () => {
   const data = localStorage.getItem("transactionList");
   const parsed = data ? JSON.parse(data) : [];

@@ -10,7 +10,7 @@ const EyeButton = ({ visible, setVisible }) => {
           if (!visible) setVisible(true);
         }}
       >
-        {visible && <Eye size={35} color="white" />}
+        {visible && <Eye size={30} color="white" />}
         {!visible && <EyeClosed size={35} color="white" />}
       </button>
     </>

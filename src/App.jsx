@@ -11,6 +11,8 @@ import Header from "./components/ui/Header";
 import BottomNav from "./components/ui/BottomNav";
 import Calendar from "./pages/Calendar";
 import NotFoundPage from "./components/ui/NotFoundPage";
+import Configs from "./pages/Configs";
+import ConfirmClear from "./pages/ConfirmClear";
 
 function App() {
   const [transactions, setTransactions] = useState(() => {
@@ -91,6 +93,11 @@ function App() {
                 setVisible={setVisible}
               />
             }
+          />
+          <Route path="/configs" element={<Configs />} />
+          <Route
+            path="/confirm-clear"
+            element={<ConfirmClear setTransactions={setTransactions} />}
           />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
