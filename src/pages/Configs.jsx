@@ -35,7 +35,7 @@ const Configs = () => {
             <p className="flex gap-1 items-center">
               <CircuitBoard size={20} color="white" />
               <span className="text-white">|</span>
-              <span className="text-white">Versao 0.1.2</span>
+              <span className="text-white">Versao 0.8.0</span>
             </p>
           </p>
         </div>
