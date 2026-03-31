@@ -7,10 +7,10 @@ import CategoryList from "./CategoryList";
 import InputName from "../components/inputs/InputName";
 import InputValue from "../components/inputs/InputValue";
 import CategoryInput from "../components/inputs/CategoryInput";
+import TypeInput from "../components/inputs/TypeInput";
+import { validateTransaction } from "../../services/validateTransaction";
 
 const AddTransaction = ({ transactions, setTransactions }) => {
-  const incomeInput = useRef();
-  const outcomeInput = useRef();
   const valueInput = useRef("");
   const nameInput = useRef("");
 
@@ -25,10 +25,7 @@ const AddTransaction = ({ transactions, setTransactions }) => {
   const [categoryDisplay, setCategoryDisplay] = useState("hidden");
   const [mainDisplay, setMainDisplay] = useState("");
   const [selectedCategory, setSelectedCategory] = useState();
-
-  const [incomeCheck, setIncomeCheck] = useState();
-  const [outcomeCheck, setOutcomeCheck] = useState();
-  const [transactionType, setTransactionType] = useState();
+  const [type, setType] = useState(null);
   const [valueText, setValueText] = useState();
 
   const navigate = useNavigate();
@@ -43,6 +40,16 @@ const AddTransaction = ({ transactions, setTransactions }) => {
     }
   }, [categoryInput]);
 
+  const handleChange = (value) => {
+    setType(() => {
+      if (value === type) {
+        return value;
+      } else if (value !== type) {
+        return value;
+      }
+    });
+  };
+
   const sendTransaction = (newTransaction) => {
     let valueText = newTransaction.value;
     valueText = valueText.replace(",", ".");
@@ -56,7 +63,7 @@ const AddTransaction = ({ transactions, setTransactions }) => {
         value: Number(value),
         type: newTransaction.type,
         date: newTransaction.date,
-        category: selectedCategory,
+        category: newTransaction.category,
       };
 
       setTransactions((prev) => {
@@ -95,11 +102,13 @@ const AddTransaction = ({ transactions, setTransactions }) => {
         />
       </div>
 
-      <section className={`relative h-140 ${mainDisplay}`}>
-        <div className="border w-[90%] flex flex-col justify-center items-center absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 rounded-xl outline-0 shadow-xl transition-shadow duration-300 border-stone-400">
-          <div className="w-82 flex justify-center mt-2 mb-2">
-            <span className="text-2xl">Nova transaçao</span>
-          </div>
+      <section
+        className={`flex flex-col justify-center items-center ${mainDisplay}`}
+      >
+        <div className="w-full h-18 bg-zinc-950 pl-2 flex items-center mb-2">
+          <span className="text-2xl text-white">Nova transaçao</span>
+        </div>
+        <div className="w-92 flex flex-col justify-center items-center rounded-xl">
           <InputName nameInput={nameInput} />
 
           <InputValue
@@ -113,41 +122,7 @@ const AddTransaction = ({ transactions, setTransactions }) => {
             selectedCategory={selectedCategory}
           />
 
-          <div className="bg-white p-3 w-82 rounded-xl outline-0 shadow-xl hover:shadow-2xl transition-shadow duration-300 flex gap-6 items-center justify-center mt-2">
-            <div className="flex justify-center items-center gap-1">
-              <input
-                type="checkbox"
-                ref={incomeInput}
-                checked={incomeCheck}
-                onClick={() => {
-                  const isChecked = incomeInput.current.checked;
-                  if (isChecked) {
-                    setIncomeCheck(true);
-                    setOutcomeCheck(false);
-                    setTransactionType("income");
-                  }
-                }}
-              />
-              Entrada
-            </div>
-
-            <div className="flex justify-center items-center gap-1">
-              <input
-                type="checkbox"
-                ref={outcomeInput}
-                checked={outcomeCheck}
-                onClick={() => {
-                  const isChecked = outcomeInput.current.checked;
-                  if (isChecked) {
-                    setIncomeCheck(false);
-                    setOutcomeCheck(true);
-                    setTransactionType("outcome");
-                  }
-                }}
-              />
-              Saída
-            </div>
-          </div>
+          <TypeInput handleChange={handleChange} type={type} />
 
           <DateInput
             dayInput={dayInputRef}
@@ -161,42 +136,34 @@ const AddTransaction = ({ transactions, setTransactions }) => {
 
           <div className="flex w-82 justify-between mt-2 mb-2">
             <button
-              className="bg-gray-400 rounded-2xl p-1 active:scale-95 cursor-pointer hover:scale-105 transition-all"
+              className="bg-red-400 rounded-2xl p-1 active:scale-95 cursor-pointer hover:scale-105 transition-all"
               onClick={() => navigate("/")}
             >
-              <X width={48} height={48} />
+              <X width={48} height={48} color="white" />
             </button>
             <button
-              className="bg-gray-800 rounded-2xl p-1 active:scale-95 cursor-pointer hover:scale-105 transition-all"
+              className="bg-green-600 rounded-2xl p-1 active:scale-95 cursor-pointer hover:scale-105 transition-all"
               onClick={() => {
-                if (
-                  valueInput.current.value == "" ||
-                  valueInput.current.value < 0
-                ) {
-                  console.log("VALOR INSERIDO INVALIDO");
-                } else if (transactionType == undefined) {
-                  console.log("TIPO NAO SELECIONADO");
-                } else if (
-                  dayInput == "" ||
-                  monthInput == "" ||
-                  yearInput == ""
-                ) {
-                  console.log("DATA NAO SELECIONADA");
-                } else if (nameInput.current.value.trim() == "") {
-                  console.log("NOME NAO INFORMADO");
-                } else {
-                  const data = {
-                    id: Date.now(),
-                    name: nameInput.current.value,
-                    value: valueInput.current.value,
-                    type: transactionType,
-                    date: {
-                      day: dayInput,
-                      month: monthInput,
-                      year: yearInput,
-                    },
-                  };
+                const data = {
+                  id: Date.now(),
+                  name: nameInput.current.value,
+                  value: valueInput.current.value,
+                  type: type,
+                  date: {
+                    day: dayInput,
+                    month: monthInput,
+                    year: yearInput,
+                  },
+                  category: selectedCategory,
+                };
+
+                const isDataValid = validateTransaction(data);
+
+                if (isDataValid.success) {
+                  console.log(isDataValid.data);
                   sendTransaction(data);
+                } else {
+                  console.log("Error: " + isDataValid.error);
                 }
               }}
             >

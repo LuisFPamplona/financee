@@ -7,13 +7,18 @@ import InputName from "../components/inputs/InputName.jsx";
 import DateInput from "../components/inputs/DateInput.jsx";
 import InputValue from "../components/inputs/InputValue.jsx";
 import CategoryInput from "../components/inputs/CategoryInput.jsx";
+import TypeInput from "../components/inputs/TypeInput.jsx";
 
 const TransactionDetail = ({ onDelete, setTransactions }) => {
   const { transactionId } = useParams();
   const navigate = useNavigate();
 
+  const [dayInput, setDayInput] = useState();
+  const [monthInput, setMonthInput] = useState();
+  const [yearInput, setYearInput] = useState();
+
   const [transaction, setTransaction] = useState(null);
-  const [tipo, setTipo] = useState(null);
+  const [type, setType] = useState(null);
   const [valueText, setValueText] = useState();
   const [selectedCategory, setSelectedCategory] = useState();
   const [categoryInput, setCategoryInput] = useState(false);
@@ -21,9 +26,9 @@ const TransactionDetail = ({ onDelete, setTransactions }) => {
 
   const [mainDisplay, setMainDisplay] = useState("");
 
-  const dayInput = useRef();
-  const monthInput = useRef();
-  const yearInput = useRef();
+  const dayInputRef = useRef();
+  const monthInputRef = useRef();
+  const yearInputRef = useRef();
 
   const tName = useRef();
   const tValue = useRef();
@@ -45,11 +50,11 @@ const TransactionDetail = ({ onDelete, setTransactions }) => {
   }, [categoryInput]);
 
   const handleChange = (value) => {
-    setTipo((prev) => (prev === value ? null : value));
+    setType((prev) => (prev === value ? null : value));
   };
 
   const sendChanges = (name, value, date) => {
-    let type;
+    let tType;
     let correctValue = value;
 
     if (name.trim() == "") {
@@ -64,10 +69,10 @@ const TransactionDetail = ({ onDelete, setTransactions }) => {
       return alert("Data nao pode estar vazia", date);
     }
 
-    if (tipo === "income") {
-      type = "income";
-    } else if (tipo === "outcome") {
-      type = "outcome";
+    if (type === "income") {
+      tType = "income";
+    } else if (type === "outcome") {
+      tType = "outcome";
       correctValue = "-" + value;
     } else {
       return alert("Deve selecionar entrada ou saída");
@@ -121,23 +126,25 @@ const TransactionDetail = ({ onDelete, setTransactions }) => {
           setSelectedCategory={setSelectedCategory}
         />
       </div>
-      <section className={`relative h-140 ${mainDisplay}`}>
-        <div className="border w-[90%] flex flex-col justify-center items-center absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 rounded-xl outline-0 shadow-xl transition-shadow duration-300 border-stone-400">
-          <button
-            className="rounded-xl p-1.5 absolute top-2 right-2 bg-red-200 font-bold text-white hover:scale-105 active:scale-95 transition-all cursor-pointer"
-            onClick={() => {
-              if (
-                window.confirm("Tem certeza que quer deletar esta transaçao?")
-              ) {
-                onDelete(transaction.id);
-                navigate("/");
-              }
-            }}
-          >
-            <Trash2 color="red" />
-          </button>
-          <div className="w-82 flex justify-center mt-2 mb-6">
-            <span className="text-2xl">Editar transaçao</span>
+      <section className={`h-140 ${mainDisplay}`}>
+        <div className="flex flex-col justify-center items-center">
+          <div className="bg-zinc-950 w-full h-18 flex items-center justify-between pl-4 pr-4 mb-4">
+            <div className="">
+              <span className="text-2xl text-white">Editar transaçao</span>
+            </div>
+            <button
+              className="rounded-xl p-1.5  bg-red-200 font-bold text-white hover:scale-105 active:scale-95 transition-all cursor-pointer"
+              onClick={() => {
+                if (
+                  window.confirm("Tem certeza que quer deletar esta transaçao?")
+                ) {
+                  onDelete(transaction.id);
+                  navigate("/");
+                }
+              }}
+            >
+              <Trash2 color="red" />
+            </button>
           </div>
           <InputName nameInput={tName} defaultValue={transaction.name} />
 
@@ -153,60 +160,48 @@ const TransactionDetail = ({ onDelete, setTransactions }) => {
             selectedCategory={selectedCategory}
           />
 
-          <div className="bg-white p-3 w-82 rounded-xl outline-0 shadow-xl hover:shadow-2xl transition-shadow duration-300 flex gap-6 items-center justify-center mt-2">
-            <div className="flex justify-center items-center gap-1">
-              <input
-                type="checkbox"
-                checked={tipo === "income"}
-                onChange={() => handleChange("income")}
-                ref={incomeCheck}
-              />
-              Entrada
-            </div>
-
-            <div className="flex justify-center items-center gap-1">
-              <input
-                type="checkbox"
-                checked={tipo === "outcome"}
-                onChange={() => handleChange("outcome")}
-                ref={outcomeCheck}
-              />
-              Saída
-            </div>
-          </div>
+          <TypeInput
+            handleChange={handleChange}
+            incomeCheck={incomeCheck}
+            outcomeCheck={outcomeCheck}
+            type={type}
+          />
 
           <div className="mt-2">
             <DateInput
               defaultDate={transaction.date}
-              dayInput={dayInput}
-              monthInput={monthInput}
-              yearInput={yearInput}
+              dayInput={dayInputRef}
+              monthInput={monthInputRef}
+              yearInput={yearInputRef}
+              setDayInput={setDayInput}
+              setMonthInput={setMonthInput}
+              setYearInput={setYearInput}
             />
           </div>
 
           <div className="flex w-82 justify-between mt-2 mb-2">
             <button
-              className="bg-gray-400 rounded-2xl p-1 active:scale-95 cursor-pointer hover:scale-105 transition-all"
+              className="bg-red-400 rounded-2xl p-1 active:scale-95 cursor-pointer hover:scale-105 transition-all"
               onClick={() => navigate("/")}
             >
-              <X width={48} height={48} />
+              <X width={48} height={48} color="white" />
             </button>
             <button
-              className="bg-gray-800 rounded-2xl p-1 active:scale-95 cursor-pointer hover:scale-105 transition-all"
+              className="bg-green-600 rounded-2xl p-1 active:scale-95 cursor-pointer hover:scale-105 transition-all"
               onClick={() => {
                 if (
-                  !dayInput.current.value ||
-                  !monthInput.current.value ||
-                  !yearInput.current.value
+                  !dayInputRef.current.value ||
+                  !monthInputRef.current.value ||
+                  !yearInputRef.current.value
                 ) {
                   alert("erro na data");
                 }
 
                 const value = tValue.current.value.replace(",", ".");
                 sendChanges(tName.current.value, Number(value), {
-                  day: dayInput.current.value,
-                  month: monthInput.current.value,
-                  year: yearInput.current.value,
+                  day: dayInputRef.current.value,
+                  month: monthInputRef.current.value,
+                  year: yearInputRef.current.value,
                 });
               }}
             >

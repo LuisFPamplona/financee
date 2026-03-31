@@ -1,10 +1,10 @@
 const InputName = ({ nameInput, defaultValue }) => {
   return (
     <>
-      <div className="w-82">
+      <div className="w-82 h-12 border border-gray-400 bg-zinc-900 rounded-xl flex pl-3">
         <input
           type="text"
-          className="bg-white p-3 w-full rounded-xl outline-0 shadow-xl hover:shadow-2xl transition-shadow duration-300 mt-2"
+          className="text-white font-bold outline-0"
           placeholder="Nome"
           ref={nameInput}
           defaultValue={defaultValue}

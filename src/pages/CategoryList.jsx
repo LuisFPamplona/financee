@@ -23,7 +23,7 @@ const CategoryList = ({ setCategoryInput, setSelectedCategory }) => {
   const renderList = categoryList.map((item, index) => {
     return (
       <div
-        className="flex border justify-between items-center gap-4 border-gray-400 mt-2 bg-white p-3 w-82 rounded-xl outline-0 shadow-xl hover:shadow-2xl transition-all duration-300 cursor-pointer hover:scale-100 active:scale-98 "
+        className="flex border justify-between items-center gap-4 border-gray-400 mt-2 p-3 w-82 rounded-xl outline-0 cursor-pointer bg-zinc-900 active:scale-98 hover:scale-105 transition-all"
         key={index}
         onClick={() => {
           setSelectedCategory(item);
@@ -35,26 +35,26 @@ const CategoryList = ({ setCategoryInput, setSelectedCategory }) => {
             className="w-4 h-4 rounded-sm"
             style={{ backgroundColor: COLORS[index % COLORS.length] }}
           />
-          {item}
+          <p className="text-white font-bold text-sm">{item}</p>
         </div>
-        <CircleCheckBig color="gray" />
+        <CircleCheckBig color="white" />
       </div>
     );
   });
 
   return (
     <>
-      <section className="relative h-140">
-        <div className="border w-90 h-115 flex flex-col justify-center items-center absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 rounded-xl outline-0 shadow-xl transition-shadow duration-300 border-stone-400">
-          <div className="w-82 flex justify-center items-center mt-2 mb-2">
-            <span
-              className="absolute right-3.5 top-7 cursor-pointer bg-gray-100 p-2 rounded-full hover:scale-105 active:scale-95"
-              onClick={() => setCategoryInput(false)}
-            >
-              <CornerUpLeft color="black" />
-            </span>
-            <span className="text-2xl mb-4">Lista de categorias</span>
-          </div>
+      <section className="h-140">
+        <div className="w-full h-18 bg-zinc-950 flex justify-between items-center mb-4 pl-4 pr-4">
+          <span className="text-2xl mb-4 text-white">Lista de categorias</span>
+          <span
+            className="cursor-pointer bg-gray-100 p-2 rounded-full hover:scale-105 active:scale-95"
+            onClick={() => setCategoryInput(false)}
+          >
+            <CornerUpLeft color="black" />
+          </span>
+        </div>
+        <div className="w-full h-92 flex justify-center items-center">
           <div>{renderList}</div>
         </div>
       </section>

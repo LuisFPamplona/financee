@@ -23,11 +23,13 @@ const DateInput = ({
   };
   return (
     <>
-      <div className="bg-white pb-2 w-82 mt-2 rounded-xl outline-0 shadow-xl hover:shadow-2xl transition-shadow duration-300 flex flex-col justify-center items-center gap-2">
-        <span className="w-full pl-3">Data da transaçao</span>
+      <div className="bg-zinc-900 border border-gray-400 pb-2 w-82 mt-2 rounded-xl outline-0 shadow-xl hover:shadow-2xl transition-shadow duration-300 flex flex-col justify-center items-center gap-2">
+        <span className="w-full pl-3 text-white text-sm font-bold pt-1">
+          Data da transaçao
+        </span>
         <div className="flex gap-4 items-center">
-          <div className="border w-16 h-17 rounded-2xl">
-            <span className="text-center flex justify-center text-gray-500">
+          <div className="border w-16 h-17 rounded-2xl bg-zinc-800 font-bold">
+            <span className="text-center flex justify-center text-white text-sm font-bold">
               Dia
             </span>
             <input
@@ -44,12 +46,12 @@ const DateInput = ({
               defaultValue={defaultDate.day ? defaultDate.day : ""}
               type="text"
               inputMode="numeric"
-              className="w-16 p-1 outline-0 text-center text-2xl"
+              className="w-16 p-1 outline-0 text-center text-2xl text-white"
               maxLength={2}
             />
           </div>
-          <div className="border w-16 h-17 rounded-2xl">
-            <span className="text-center flex justify-center text-gray-500">
+          <div className="border w-16 h-17 rounded-2xl bg-zinc-800 font-bold">
+            <span className="text-center flex justify-center text-white text-sm font-bold">
               Mes
             </span>
             <input
@@ -66,12 +68,12 @@ const DateInput = ({
               defaultValue={defaultDate.month ? defaultDate.month : ""}
               type="text"
               inputMode="numeric"
-              className="w-16 p-1 outline-0 text-center text-2xl"
+              className="w-16 p-1 outline-0 text-center text-2xl text-white"
               maxLength={2}
             />
           </div>
-          <div className="border w-16 h-17 rounded-2xl">
-            <span className="text-center flex justify-center text-gray-500">
+          <div className="border w-16 h-17 rounded-2xl bg-zinc-800 font-bold">
+            <span className="text-center flex justify-center text-white text-sm font-bold">
               Ano
             </span>
             <input
@@ -88,19 +90,19 @@ const DateInput = ({
               defaultValue={defaultDate.year ? defaultDate.year : ""}
               type="text"
               inputMode="numeric"
-              className="w-16 p-1 outline-0 text-center text-2xl"
+              className="w-16 p-1 outline-0 text-center text-2xl text-white"
               maxLength={4}
             />
           </div>
           <div>
             <button
-              className="border rounded shadow-2xl p-1 active:scale-98 transition-all cursor-pointer"
+              className="border bg-zinc-800  rounded shadow-2xl p-1 active:scale-98 transition-all cursor-pointer"
               onClick={() => {
                 const date = getToday();
                 setDayAsToday(date.day, date.month, date.year);
               }}
             >
-              <span>Hoje</span>
+              <span className="text-white font-bold">Hoje</span>
             </button>
           </div>
         </div>

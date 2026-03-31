@@ -91,7 +91,7 @@ const Calendar = ({ transactions, visible, setVisible }) => {
   const listFromStart = sortedByStart.map((item, index) => {
     return (
       <div
-        className="w-full cursor-pointer hover:scale-105 active:scale-95 transition-all"
+        className="w-full cursor-pointer hover:scale-102 active:scale-98 transition-all"
         key={index}
         onClick={() => navigate(`/transaction/${item.id}`)}
       >
@@ -110,7 +110,7 @@ const Calendar = ({ transactions, visible, setVisible }) => {
   const listFromEnd = sortedByEnd.map((item, index) => {
     return (
       <div
-        className="w-full cursor-pointer hover:scale-105 active:scale-95 transition-all"
+        className="w-full cursor-pointer hover:scale-102 active:scale-98 transition-all"
         key={index}
         onClick={() => navigate(`/transaction/${item.id}`)}
       >
@@ -139,7 +139,7 @@ const Calendar = ({ transactions, visible, setVisible }) => {
   return (
     <>
       <section className="flex flex-col w-full items-center  justify-center ">
-        <div className="flex items-center justify-between p-4 bg-zinc-900 w-full h-18">
+        <div className="flex items-center justify-between p-4 bg-zinc-950 w-full h-18">
           <button
             className="bg-white rounded active:scale-98 cursor-pointer"
             onClick={() => {
@@ -167,10 +167,24 @@ const Calendar = ({ transactions, visible, setVisible }) => {
             <ChevronRight size={30} />
           </button>
         </div>
+        <div className="w-84 flex justify-between items-center h-16">
+          <button
+            className="p-1 active:scale-98 cursor-pointer transition-all"
+            onClick={() => {
+              const newSort = changeSort(sortType);
+              setSortType(newSort);
+            }}
+          >
+            <ArrowUpDown color="white" size={30} />
+          </button>
+          <span className="pt-2">
+            <EyeButton visible={visible} setVisible={setVisible} />
+          </span>
+        </div>
 
-        <div className="w-92 flex justify-between h-14 items-center">
+        <div className="w-85 flex justify-between h-14 items-center">
           <div className="flex justify-between w-full ">
-            <div className="bg-green-400 w-42 h-10 rounded-xl ml-2 flex justify-center items-center">
+            <div className="bg-green-400 w-36 text-sm h-10 rounded-xl ml-2 flex justify-center items-center">
               <span className="font-bold">+</span>
               <span className="font-bold">
                 {visible && <span>{formatCurrency(totals.income)}</span>}
@@ -186,7 +200,7 @@ const Calendar = ({ transactions, visible, setVisible }) => {
               </span>
             </div>
 
-            <div className="bg-red-400 w-42 h-10 rounded-xl mr-2 flex justify-center items-center">
+            <div className="bg-red-400 w-36 text-sm h-10 rounded-xl mr-2 flex justify-center items-center">
               <span className="font-bold">-</span>
               <span className="font-bold">
                 {visible && <span>{formatCurrency(totals.outcome)}</span>}
@@ -202,21 +216,6 @@ const Calendar = ({ transactions, visible, setVisible }) => {
               </span>
             </div>
           </div>
-        </div>
-
-        <div className="bg-zinc-900 w-full flex justify-between pl-4 pr-4 items-center h-16">
-          <button
-            className="p-1 active:scale-98 cursor-pointer transition-all"
-            onClick={() => {
-              const newSort = changeSort(sortType);
-              setSortType(newSort);
-            }}
-          >
-            <ArrowUpDown color="white" size={30} />
-          </button>
-          <span className="pt-2">
-            <EyeButton visible={visible} setVisible={setVisible} />
-          </span>
         </div>
 
         <div className="w-full flex items-center justify-center">

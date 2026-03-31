@@ -28,7 +28,7 @@ function BottomNav() {
       </button>
 
       <button
-        className="bg-black text-white w-14 h-14 rounded-full flex items-center justify-center -mt-6 shadow-md cursor-pointer p-3"
+        className="bg-black text-white w-14 h-14 rounded-full flex items-center justify-center  shadow-md cursor-pointer p-3"
         onClick={() => navigate("/add-transaction")}
       >
         <Plus size={24} />
