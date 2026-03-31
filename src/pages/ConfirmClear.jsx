@@ -6,8 +6,8 @@ const ConfirmClear = ({ setTransactions }) => {
   return (
     <>
       <section className="w-full flex items-center justify-center mt-16">
-        <div className="w-82 flex flex-col justify-center items-center border p-2 rounded-2xl">
-          <p className="text-center">
+        <div className="w-82 flex flex-col justify-center items-center border p-2 rounded-2xl bg-zinc-900">
+          <p className="text-center text-white font-bold">
             <span>
               Tem certeza que quer deletar{" "}
               <span className="font-bold">TODOS</span> os dados?
