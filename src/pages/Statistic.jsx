@@ -44,14 +44,14 @@ const Statistic = ({ transactions, visible, setVisible }) => {
   return (
     <>
       <section className="flex  flex-col items-center gap-2 h-140">
-        <div className="flex items-center justify-between p-4 bg-zinc-900 w-full h-18">
+        <div className="flex items-center justify-between p-4 bg-zinc-950 w-full h-18">
           <p className="text-2xl text-white">Estatísticas</p>
           <p>
             <EyeButton visible={visible} setVisible={setVisible} />
           </p>
         </div>
-        <div className="border w-[90%] h-115 flex flex-col justify-center items-center rounded-xl outline-0 shadow-xl transition-shadow duration-300 border-stone-400">
-          <div className="w-82 mt-2 flex justify-between h-14 items-center">
+        <div className=" w-[90%] h-115 flex flex-col justify-center items-center rounded-xl outline-0">
+          <div className="w-85 mt-2 flex justify-between h-14 items-center">
             <div className="flex justify-between w-full ">
               <div className="bg-green-400 w-36 h-10 rounded-xl ml-2 flex justify-center items-center">
                 <span className="font-bold text-sm">+</span>
@@ -92,19 +92,25 @@ const Statistic = ({ transactions, visible, setVisible }) => {
               {chartData.map((entry, index) => (
                 <div
                   key={index}
-                  className="flex border items-center gap-4 border-gray-400 mt-2 bg-white p-3 w-82 rounded-xl outline-0 shadow-xl hover:shadow-2xl transition-all duration-300 cursor-pointer hover:scale-100 active:scale-98 "
+                  className="flex border items-center gap-4 border-gray-400 mt-2 bg-zinc-900 p-3 w-82 rounded-xl outline-0 shadow-md transition-all duration-300 cursor-pointer hover:scale-100 active:scale-98 "
                 >
                   <div
                     className="w-4 h-4 rounded-sm"
                     style={{ backgroundColor: COLORS[index % COLORS.length] }}
                   />
-                  <span className="text-sm">{entry.name}</span>
+                  <span className="text-sm text-white font-bold">
+                    {entry.name}
+                  </span>
                   <span className="text-1xl ml-auto">
-                    {visible && <p>{formatCurrency(entry.value)}</p>}
+                    {visible && (
+                      <p className="text-white font-bold">
+                        {formatCurrency(entry.value)}
+                      </p>
+                    )}
                     {!visible && (
                       <div className="flex items-center gap-1">
                         <span>R$</span>
-                        <div className="bg-neutral-200 w-18 h-4" />
+                        <div className="bg-neutral-700 w-18 h-4" />
                       </div>
                     )}
                   </span>

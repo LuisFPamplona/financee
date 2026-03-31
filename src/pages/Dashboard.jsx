@@ -7,7 +7,7 @@ const Dashboard = ({ balance, transactions, visible, setVisible }) => {
   return (
     <>
       <section className="flex flex-col w-screen items-center  justify-center gap-2 ">
-        <div className="flex items-center pl-4 gap-1 bg-zinc-900 w-full h-24">
+        <div className="flex items-center pl-4 gap-1 bg-zinc-950 w-full h-18">
           <div className="flex flex-col w-72">
             <p className="text-sm font-bold text-left text-white">
               Saldo total

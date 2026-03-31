@@ -1,8 +1,8 @@
 const InputValue = ({ valueText, valueInput, setValueText, defaultValue }) => {
   return (
     <>
-      <div className="flex items-baseline gap-1  mt-2 bg-white p-3 w-82 rounded-xl outline-0 shadow-xl hover:shadow-2xl transition-shadow duration-300 ">
-        <p className="bg-white">R$</p>
+      <div className="flex items-baseline gap-1 border border-gray-400  mt-2 bg-zinc-900 p-3 w-82 rounded-xl outline-0 shadow-xl hover:shadow-2xl transition-shadow duration-300 ">
+        <p className="text-white font-bold text-sm">R$</p>
 
         <input
           type="text"
@@ -22,7 +22,7 @@ const InputValue = ({ valueText, valueInput, setValueText, defaultValue }) => {
             setValueText(val);
           }}
           placeholder="0,00"
-          className="outline-0 text-xl"
+          className="outline-0 text-xl text-white font-bold"
           ref={valueInput}
           inputMode="numeric"
         />

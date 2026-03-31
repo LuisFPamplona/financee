@@ -6,36 +6,36 @@ const Configs = () => {
   return (
     <>
       <div className="flex flex-col justify-center items-center">
-        <div className="bg-zinc-900 w-full flex items-center justify-center h-14">
+        <div className="bg-zinc-950 w-full flex items-center pl-4 h-18">
           <p className="text-2xl text-white">Configuraçoes</p>
         </div>
         <div className="flex flex-col justify-center items-center mt-16">
           <p
-            className="border-b w-82 h-12 flex items-center justify-between cursor-pointer"
+            className="border mt-1 p-1 border-white bg-zinc-900 w-86 rounded h-12 flex items-center justify-between cursor-pointer"
             onClick={() => navigate("/confirm-clear")}
           >
             <p className="flex gap-1 items-center">
-              <Trash size={20} />
-              <span>|</span>
-              <span>Limpar dados</span>
+              <Trash size={20} color="white" />
+              <span className="text-white">|</span>
+              <span className="text-white">Limpar dados</span>
             </p>
-            <ChevronRight />
+            <ChevronRight color="white" />
           </p>
 
-          <p className="border-b w-82 h-12 flex items-center justify-between cursor-pointer">
+          <p className="border mt-1 p-1 border-white bg-zinc-900 w-86 rounded h-12 flex items-center justify-between cursor-pointer">
             <p className="flex gap-1 items-center">
-              <SendHorizonal size={20} />
-              <span>|</span>
-              <span>Feedback</span>
+              <SendHorizonal size={20} color="white" />
+              <span className="text-white">|</span>
+              <span className="text-white">Feedback</span>
             </p>
-            <ChevronRight />
+            <ChevronRight color="white" />
           </p>
 
-          <p className="border-b w-82 h-12 flex items-center justify-between cursor-pointer">
+          <p className="border mt-1 p-1 border-white bg-zinc-900 w-86 rounded h-12 flex items-center justify-between cursor-pointer">
             <p className="flex gap-1 items-center">
-              <CircuitBoard size={20} />
-              <span>|</span>
-              <span>Versao 0.0.9</span>
+              <CircuitBoard size={20} color="white" />
+              <span className="text-white">|</span>
+              <span className="text-white">Versao 0.0.9</span>
             </p>
           </p>
         </div>
