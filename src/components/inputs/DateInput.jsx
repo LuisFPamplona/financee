@@ -21,6 +21,7 @@ const DateInput = ({
 
     return console.log(day, month, year);
   };
+
   return (
     <>
       <div className="bg-zinc-900 border border-gray-400 pb-2 w-82 mt-2 rounded-xl outline-0 shadow-xl hover:shadow-2xl transition-shadow duration-300 flex flex-col justify-center items-center gap-2">
@@ -43,7 +44,9 @@ const DateInput = ({
                 setDayInput(val);
               }}
               ref={dayInput}
-              defaultValue={defaultDate.day ? defaultDate.day : ""}
+              defaultValue={
+                defaultDate.day ? defaultDate.day.padStart(2, "0") : ""
+              }
               type="text"
               inputMode="numeric"
               className="w-16 p-1 outline-0 text-center text-2xl text-white"

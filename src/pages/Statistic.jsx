@@ -47,7 +47,11 @@ const Statistic = ({ transactions, visible, setVisible }) => {
         <div className="flex items-center justify-between p-4 bg-zinc-950 w-full h-18">
           <p className="text-2xl text-white">Estatísticas</p>
           <p>
-            <EyeButton visible={visible} setVisible={setVisible} />
+            <EyeButton
+              visible={visible}
+              setVisible={setVisible}
+              color={"white"}
+            />
           </p>
         </div>
         <div className=" w-[90%] h-115 flex flex-col justify-center items-center rounded-xl outline-0">
