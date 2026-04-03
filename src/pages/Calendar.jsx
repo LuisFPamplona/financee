@@ -175,10 +175,14 @@ const Calendar = ({ transactions, visible, setVisible }) => {
               setSortType(newSort);
             }}
           >
-            <ArrowUpDown color="white" size={30} />
+            <ArrowUpDown size={30} />
           </button>
           <span className="pt-2">
-            <EyeButton visible={visible} setVisible={setVisible} />
+            <EyeButton
+              visible={visible}
+              setVisible={setVisible}
+              color="black"
+            />
           </span>
         </div>
 

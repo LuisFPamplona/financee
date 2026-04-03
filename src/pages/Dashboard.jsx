@@ -22,7 +22,11 @@ const Dashboard = ({ balance, transactions, visible, setVisible }) => {
             </div>
           </div>
           <span className="pt-7">
-            <EyeButton visible={visible} setVisible={setVisible} />
+            <EyeButton
+              visible={visible}
+              setVisible={setVisible}
+              color={"white"}
+            />
           </span>
         </div>
 

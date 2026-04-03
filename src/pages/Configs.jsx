@@ -10,7 +10,7 @@ const Configs = () => {
           <p className="text-2xl text-white">Configuraçoes</p>
         </div>
         <div className="flex flex-col justify-center items-center mt-16">
-          <p
+          <div
             className="border mt-1 p-1 border-white bg-zinc-900 w-86 rounded h-12 flex items-center justify-between cursor-pointer"
             onClick={() => navigate("/confirm-clear")}
           >
@@ -20,24 +20,24 @@ const Configs = () => {
               <span className="text-white">Limpar dados</span>
             </p>
             <ChevronRight color="white" />
-          </p>
+          </div>
 
-          <p className="border mt-1 p-1 border-white bg-zinc-900 w-86 rounded h-12 flex items-center justify-between cursor-pointer">
+          <div className="border mt-1 p-1 border-white bg-zinc-900 w-86 rounded h-12 flex items-center justify-between cursor-pointer">
             <p className="flex gap-1 items-center">
               <SendHorizonal size={20} color="white" />
               <span className="text-white">|</span>
               <span className="text-white">Feedback</span>
             </p>
             <ChevronRight color="white" />
-          </p>
+          </div>
 
-          <p className="border mt-1 p-1 border-white bg-zinc-900 w-86 rounded h-12 flex items-center justify-between cursor-pointer">
+          <div className="border mt-1 p-1 border-white bg-zinc-900 w-86 rounded h-12 flex items-center justify-between cursor-pointer">
             <p className="flex gap-1 items-center">
               <CircuitBoard size={20} color="white" />
               <span className="text-white">|</span>
-              <span className="text-white">Versao 0.1.2</span>
+              <span className="text-white">Versao 0.9.0</span>
             </p>
-          </p>
+          </div>
         </div>
       </div>
     </>

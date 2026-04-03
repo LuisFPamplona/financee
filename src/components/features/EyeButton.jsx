@@ -1,6 +1,6 @@
 import { Eye, EyeClosed } from "lucide-react";
 
-const EyeButton = ({ visible, setVisible }) => {
+const EyeButton = ({ visible, setVisible, color }) => {
   return (
     <>
       <button
@@ -10,8 +10,8 @@ const EyeButton = ({ visible, setVisible }) => {
           if (!visible) setVisible(true);
         }}
       >
-        {visible && <Eye size={30} color="white" />}
-        {!visible && <EyeClosed size={35} color="white" />}
+        {visible && <Eye size={30} color={color} />}
+        {!visible && <EyeClosed size={35} color={color} />}
       </button>
     </>
   );

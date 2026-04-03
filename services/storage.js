@@ -10,6 +10,7 @@ export const loadTransaction = () => {
   const data = localStorage.getItem("transactionList");
   const parsed = data ? JSON.parse(data) : [];
 
+  // Learned how to migrate users data from old to new ones
   const hasOldFormat = parsed.some((t) => typeof t.date === "string");
 
   const migrated = parsed.map((transaction) => {
@@ -59,10 +60,15 @@ const data = {
         value: Number,
         type: String, // income || outcome
         date: {
-                      day: String,
-                      month: String,
-                      year: String,
+          day: String,
+          month: String,
+          year: String,
                     },
-        category: String
+        category: String,
+        installment: {
+          isInstallment : boleean,
+          id : string,
+          amount: number
+        }
       };
 */

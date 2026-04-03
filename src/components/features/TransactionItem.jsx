@@ -27,7 +27,7 @@ const TransactionItem = ({ value, date, name, type, category, visible }) => {
             </div>
             <div>
               <p className="text-sm text-right text-neutral-300">
-                {date.day}/{date.month}/{date.year}
+                {date.day.padStart(2, "0")}/{date.month}/{date.year}
               </p>
             </div>
           </div>

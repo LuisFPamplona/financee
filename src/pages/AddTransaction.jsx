@@ -9,6 +9,13 @@ import InputValue from "../components/inputs/InputValue";
 import CategoryInput from "../components/inputs/CategoryInput";
 import TypeInput from "../components/inputs/TypeInput";
 import { validateTransaction } from "../../services/validateTransaction";
+import InstallmentSelector from "../components/features/InstallmentSelector";
+import {
+  checkInstallment,
+  numberOfInstallments,
+  separateInstallmentsTransactions,
+  setInstallmentId,
+} from "../../services/checkInstallment";
 
 const AddTransaction = ({ transactions, setTransactions }) => {
   const valueInput = useRef("");
@@ -21,12 +28,17 @@ const AddTransaction = ({ transactions, setTransactions }) => {
   const [dayInput, setDayInput] = useState();
   const [monthInput, setMonthInput] = useState();
   const [yearInput, setYearInput] = useState();
-  const [categoryInput, setCategoryInput] = useState(false);
-  const [categoryDisplay, setCategoryDisplay] = useState("hidden");
   const [mainDisplay, setMainDisplay] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState();
   const [type, setType] = useState(null);
   const [valueText, setValueText] = useState();
+
+  const [categoryDisplay, setCategoryDisplay] = useState("hidden");
+  const [categoryInput, setCategoryInput] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState();
+
+  const [installmentDisplay, setInstallmentDisplay] = useState("hidden");
+  const [installmentInput, setInstallmentInput] = useState(false);
+  const [selectedInstallment, setSelectedInstallment] = useState();
 
   const navigate = useNavigate();
 
@@ -40,6 +52,16 @@ const AddTransaction = ({ transactions, setTransactions }) => {
     }
   }, [categoryInput]);
 
+  useEffect(() => {
+    if (installmentInput == true) {
+      setInstallmentDisplay("");
+      setMainDisplay("hidden");
+    } else if (installmentInput == false) {
+      setInstallmentDisplay("hidden");
+      setMainDisplay("");
+    }
+  }, [installmentInput]);
+
   const handleChange = (value) => {
     setType(() => {
       if (value === type) {
@@ -51,44 +73,55 @@ const AddTransaction = ({ transactions, setTransactions }) => {
   };
 
   const sendTransaction = (newTransaction) => {
+    //HAVE TO DO
+    // verify if is a installment, then divide the value and send one transaction for each installment
     let valueText = newTransaction.value;
     valueText = valueText.replace(",", ".");
+
+    let data = {
+      id: newTransaction.id,
+      name: newTransaction.name,
+      value: Number(valueText),
+      type: newTransaction.type,
+      date: newTransaction.date,
+      category: newTransaction.category,
+      installment: {
+        isInstallment: newTransaction.installment.isInstallment,
+        id: newTransaction.installment.id,
+        amount: newTransaction.installment.amount,
+      },
+    };
 
     if (newTransaction.type == "outcome") {
       const value = "-" + valueText;
 
-      const data = {
-        id: newTransaction.id,
-        name: newTransaction.name,
-        value: Number(value),
-        type: newTransaction.type,
-        date: newTransaction.date,
-        category: newTransaction.category,
-      };
+      data.value = Number(value);
 
-      setTransactions((prev) => {
-        const newList = [...prev, data];
-        saveTransaction(newList);
+      if (newTransaction.installment.isInstallment) {
+        setTransactions((prev) => {
+          const newList = [...prev, ...separateInstallmentsTransactions(data)];
+          saveTransaction(newList);
 
-        return newList;
-      });
+          return newList;
+        });
+        navigate("/");
+      } else {
+        setTransactions((prev) => {
+          const newList = [...prev, data];
+          saveTransaction(newList);
+
+          return newList;
+        });
+      }
+
       navigate("/");
     } else {
-      const data = {
-        id: newTransaction.id,
-        name: newTransaction.name,
-        value: Number(valueText),
-        type: newTransaction.type,
-        date: newTransaction.date,
-        category: selectedCategory,
-      };
       setTransactions((prev) => {
         const newList = [...prev, data];
         saveTransaction(newList);
 
         return newList;
       });
-      saveTransaction(transactions);
       navigate("/");
     }
   };
@@ -99,6 +132,15 @@ const AddTransaction = ({ transactions, setTransactions }) => {
         <CategoryList
           setCategoryInput={setCategoryInput}
           setSelectedCategory={setSelectedCategory}
+        />
+      </div>
+
+      <div className={`${installmentDisplay}`}>
+        <InstallmentSelector
+          setInstallmentInput={setInstallmentInput}
+          setSelectedInstallment={setSelectedInstallment}
+          selectedInstallment={selectedInstallment}
+          value={valueText}
         />
       </div>
 
@@ -115,6 +157,8 @@ const AddTransaction = ({ transactions, setTransactions }) => {
             valueText={valueText}
             valueInput={valueInput}
             setValueText={setValueText}
+            setInstallmentInput={setInstallmentInput}
+            selectedInstallment={selectedInstallment}
           />
 
           <CategoryInput
@@ -155,6 +199,11 @@ const AddTransaction = ({ transactions, setTransactions }) => {
                     year: yearInput,
                   },
                   category: selectedCategory,
+                  installment: {
+                    isInstallment: checkInstallment(selectedInstallment),
+                    id: setInstallmentId(selectedInstallment),
+                    amount: numberOfInstallments(selectedInstallment),
+                  },
                 };
 
                 const isDataValid = validateTransaction(data);
@@ -175,5 +224,4 @@ const AddTransaction = ({ transactions, setTransactions }) => {
     </>
   );
 };
-
 export default AddTransaction;
