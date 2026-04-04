@@ -12,9 +12,11 @@ import { searchTransaction } from "../../services/searchTransaction.js";
 import {
   checkInstallment,
   numberOfInstallments,
+  separateInstallmentsTransactions,
   setInstallmentId,
 } from "../../services/checkInstallment.js";
 import { validateTransaction } from "../../services/validateTransaction.js";
+import InstallmentSelector from "../components/features/InstallmentSelector.jsx";
 
 const TransactionDetail = ({ onDelete, setTransactions }) => {
   const { transactionId } = useParams();
@@ -75,6 +77,16 @@ const TransactionDetail = ({ onDelete, setTransactions }) => {
     }
   }, [categoryInput]);
 
+  useEffect(() => {
+    if (installmentInput == true) {
+      setInstallmentDisplay("");
+      setMainDisplay("hidden");
+    } else if (installmentInput == false) {
+      setInstallmentDisplay("hidden");
+      setMainDisplay("");
+    }
+  }, [installmentInput]);
+
   const handleChange = (value) => {
     setType((prev) => (prev === value ? null : value));
   };
@@ -88,10 +100,21 @@ const TransactionDetail = ({ onDelete, setTransactions }) => {
 
     const indexToChange = list.findIndex((i) => i.id == data.id);
 
-    newList[indexToChange] = data;
+    if (data.installment.isInstallment) {
+      const updatedList = newList.filter(
+        (item, index) => index !== indexToChange,
+      );
 
-    setTransactions(newList);
-    saveTransaction(newList);
+      setTransactions(() => [
+        ...updatedList,
+        ...separateInstallmentsTransactions(data),
+      ]);
+      saveTransaction(newList);
+    } else {
+      newList[indexToChange] = data;
+      setTransactions(newList);
+      saveTransaction(newList);
+    }
     navigate("/");
   };
 
@@ -109,6 +132,14 @@ const TransactionDetail = ({ onDelete, setTransactions }) => {
         <CategoryList
           setCategoryInput={setCategoryInput}
           setSelectedCategory={setSelectedCategory}
+        />
+      </div>
+      <div className={`${installmentDisplay}`}>
+        <InstallmentSelector
+          setInstallmentInput={setInstallmentInput}
+          setSelectedInstallment={setSelectedInstallment}
+          selectedInstallment={selectedInstallment}
+          value={valueText}
         />
       </div>
       <section className={`h-140 ${mainDisplay}`}>
@@ -138,6 +169,8 @@ const TransactionDetail = ({ onDelete, setTransactions }) => {
             defaultValue={transaction.value}
             setValueText={setValueText}
             valueText={valueText}
+            setInstallmentInput={setInstallmentInput}
+            selectedInstallment={selectedInstallment}
           />
 
           <CategoryInput

@@ -1,5 +1,6 @@
 import { ChevronsRight } from "lucide-react";
 import InstallmentSelector from "../features/InstallmentSelector";
+import { useEffect } from "react";
 
 const InputValue = ({
   valueText,
@@ -17,6 +18,10 @@ const InputValue = ({
       return value;
     }
   };
+
+  useEffect(() => {
+    setValueText(defaultValue);
+  }, []);
   return (
     <>
       <div className="flex items-center mt-2 gap-1">
@@ -25,7 +30,6 @@ const InputValue = ({
           <input
             type="text"
             value={valueText}
-            defaultValue={formatValue(defaultValue)}
             onChange={(e) => {
               let val = e.target.value;
               val = val.replace(/[^0-9,]/g, "");
@@ -51,6 +55,7 @@ const InputValue = ({
             if (valueText) {
               setInstallmentInput(true);
             } else {
+              console.log(valueText);
               console.log("Value cannot be null");
             }
           }}
