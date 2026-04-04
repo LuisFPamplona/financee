@@ -73,8 +73,6 @@ const AddTransaction = ({ transactions, setTransactions }) => {
   };
 
   const sendTransaction = (newTransaction) => {
-    //HAVE TO DO
-    // verify if is a installment, then divide the value and send one transaction for each installment
     let valueText = newTransaction.value;
     valueText = valueText.replace(",", ".");
 
@@ -92,28 +90,13 @@ const AddTransaction = ({ transactions, setTransactions }) => {
       },
     };
 
-    if (newTransaction.type == "outcome") {
-      const value = "-" + valueText;
+    if (newTransaction.installment.isInstallment) {
+      setTransactions((prev) => {
+        const newList = [...prev, ...separateInstallmentsTransactions(data)];
+        saveTransaction(newList);
 
-      data.value = Number(value);
-
-      if (newTransaction.installment.isInstallment) {
-        setTransactions((prev) => {
-          const newList = [...prev, ...separateInstallmentsTransactions(data)];
-          saveTransaction(newList);
-
-          return newList;
-        });
-        navigate("/");
-      } else {
-        setTransactions((prev) => {
-          const newList = [...prev, data];
-          saveTransaction(newList);
-
-          return newList;
-        });
-      }
-
+        return newList;
+      });
       navigate("/");
     } else {
       setTransactions((prev) => {

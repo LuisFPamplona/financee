@@ -20,6 +20,9 @@ const TransactionList = ({ transactions, visible }) => {
           type={item.type}
           category={item.category}
           visible={visible}
+          isInstallment={item.installment.isInstallment}
+          installment={item.installment}
+          installmentNumber={item.installmentNumber}
         />
       </div>
     );

@@ -32,15 +32,6 @@ const Statistic = ({ transactions, visible, setVisible }) => {
     },
     { income: 0, outcome: 0 },
   );
-
-  const COLORS = [
-    "#22c55e",
-    "#ef4444",
-    "#3b82f6",
-    "#f59e0b",
-    "#a855f7",
-    "#14b8a6",
-  ];
   return (
     <>
       <section className="flex  flex-col items-center gap-2 h-140">
@@ -98,10 +89,6 @@ const Statistic = ({ transactions, visible, setVisible }) => {
                   key={index}
                   className="flex border items-center gap-4 border-gray-400 mt-2 bg-zinc-900 p-3 w-82 rounded-xl outline-0 shadow-md transition-all duration-300 cursor-pointer hover:scale-100 active:scale-98 "
                 >
-                  <div
-                    className="w-4 h-4 rounded-sm"
-                    style={{ backgroundColor: COLORS[index % COLORS.length] }}
-                  />
                   <span className="text-sm text-white font-bold">
                     {entry.name}
                   </span>

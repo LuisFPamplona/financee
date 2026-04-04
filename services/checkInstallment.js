@@ -39,6 +39,7 @@ const data = {
           id : string,
           amount: number
         }
+          installmentNumber: number,
       };
 */
 export const separateInstallmentsTransactions = (data) => {

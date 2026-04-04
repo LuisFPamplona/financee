@@ -1,6 +1,16 @@
 import { formatCurrency } from "../../../utils/formatCurrency.js";
 
-const TransactionItem = ({ value, date, name, type, category, visible }) => {
+const TransactionItem = ({
+  value,
+  date,
+  name,
+  type,
+  category,
+  visible,
+  installment,
+  installmentNumber,
+  isInstallment,
+}) => {
   const typeColor = type === "income" ? "text-green-400" : "text-red-400";
 
   return (
@@ -11,10 +21,12 @@ const TransactionItem = ({ value, date, name, type, category, visible }) => {
         <div className="flex justify-between items-center w-full ">
           <div>
             <p className="text-left text-white font-bold">{name}</p>
-            <p className="text-sm text-neutral-300">{category}</p>
+            <p>
+              <span className="text-sm text-neutral-300">{category}</span>
+            </p>
           </div>
 
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col gap-1 justify-end items-end">
             <div className={`font-bold ${typeColor} tracking-wide`}>
               {visible && <span>{formatCurrency(value)}</span>}
               {!visible && (
@@ -25,6 +37,9 @@ const TransactionItem = ({ value, date, name, type, category, visible }) => {
                 </div>
               )}
             </div>
+            {isInstallment && (
+              <span className="text-sm text-neutral-300">{`${installmentNumber}/${installment.amount}`}</span>
+            )}
             <div>
               <p className="text-sm text-right text-neutral-300">
                 {date.day.padStart(2, "0")}/{date.month}/{date.year}
