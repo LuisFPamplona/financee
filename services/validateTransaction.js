@@ -1,14 +1,14 @@
 export const validateTransaction = (data) => {
   if (data.name.trim() === "") {
-    return { success: false, error: "Invalid Name" };
+    return { success: false, error: "Nome inválido" };
   }
 
   if (data.value === "" || data.value < 0) {
-    return { success: false, error: "Invalid Value" };
+    return { success: false, error: "Valor inválido" };
   }
 
   if (data.type !== "outcome" && data.type !== "income") {
-    return { success: false, error: "Invalid Type" };
+    return { success: false, error: "Tipo inválido" };
   }
 
   if (
@@ -16,11 +16,11 @@ export const validateTransaction = (data) => {
     data.date.month === undefined ||
     data.date.year === undefined
   ) {
-    return { success: false, error: "Invalid Date" };
+    return { success: false, error: "Data inválida" };
   }
 
   if (data.category === undefined) {
-    return { success: false, error: "Invalid Category" };
+    return { success: false, error: "Categoria inválida" };
   }
 
   return { success: true, data };

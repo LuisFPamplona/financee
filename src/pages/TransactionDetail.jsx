@@ -17,6 +17,8 @@ import {
 } from "../../services/checkInstallment.js";
 import { validateTransaction } from "../../services/validateTransaction.js";
 import InstallmentSelector from "../components/features/InstallmentSelector.jsx";
+import { toast, ToastContainer } from "react-toastify";
+import Swal from "sweetalert2";
 
 const TransactionDetail = ({ onDelete, setTransactions }) => {
   const { transactionId } = useParams();
@@ -87,6 +89,26 @@ const TransactionDetail = ({ onDelete, setTransactions }) => {
     }
   }, [installmentInput]);
 
+  const handleDelete = async (id) => {
+    const result = await Swal.fire({
+      title: "Tem certeza?",
+      text: "Essa transação será excluída permanentemente.",
+      icon: "warning",
+      background: "#18181b",
+      color: "#fff",
+      showCancelButton: true,
+      confirmButtonColor: "#ef4444",
+      cancelButtonColor: "#6b7280",
+      confirmButtonText: "Sim, excluir",
+      cancelButtonText: "Cancelar",
+    });
+
+    if (result.isConfirmed) {
+      onDelete(id);
+      navigate("/");
+    }
+  };
+
   const handleChange = (value) => {
     setType((prev) => (prev === value ? null : value));
   };
@@ -128,6 +150,7 @@ const TransactionDetail = ({ onDelete, setTransactions }) => {
 
   return (
     <>
+      <ToastContainer />
       <div className={`${categoryDisplay}`}>
         <CategoryList
           setCategoryInput={setCategoryInput}
@@ -151,12 +174,7 @@ const TransactionDetail = ({ onDelete, setTransactions }) => {
             <button
               className="rounded-xl p-1.5  bg-red-200 font-bold text-white hover:scale-105 active:scale-95 transition-all cursor-pointer"
               onClick={() => {
-                if (
-                  window.confirm("Tem certeza que quer deletar esta transaçao?")
-                ) {
-                  onDelete(transaction.id);
-                  navigate("/");
-                }
+                handleDelete(transaction.id);
               }}
             >
               <Trash2 color="red" />
@@ -231,6 +249,12 @@ const TransactionDetail = ({ onDelete, setTransactions }) => {
                   console.log(isDataValid.data);
                   sendChanges(data, transactionList);
                 } else {
+                  toast.error(isDataValid.error, {
+                    position: "top-center",
+                    autoClose: 2500,
+                    draggable: true,
+                    theme: "colored",
+                  });
                   console.log("Error: " + isDataValid.error);
                 }
               }}

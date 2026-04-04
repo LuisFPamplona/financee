@@ -1,8 +1,34 @@
 import { ChevronRight, CircuitBoard, SendHorizonal, Trash } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import { deleteTransactions, loadTransaction } from "../../services/storage";
 
-const Configs = () => {
+const Configs = ({ setTransactions }) => {
   const navigate = useNavigate();
+
+  const handleDelete = async () => {
+    const result = await Swal.fire({
+      title: "Tem certeza?",
+      text: "Seus dados serão excluídos permanentemente.",
+      icon: "warning",
+      background: "#18181b",
+      color: "#fff",
+      showCancelButton: true,
+      confirmButtonColor: "#ef4444",
+      cancelButtonColor: "#6b7280",
+      confirmButtonText: "Sim, excluir",
+      cancelButtonText: "Cancelar",
+    });
+
+    if (result.isConfirmed) {
+      setTransactions(() => {
+        deleteTransactions();
+        return loadTransaction();
+      });
+      navigate("/");
+    }
+  };
+
   return (
     <>
       <div className="flex flex-col justify-center items-center">
@@ -12,7 +38,7 @@ const Configs = () => {
         <div className="flex flex-col justify-center items-center mt-16">
           <div
             className="border mt-1 p-1 border-white bg-zinc-900 w-86 rounded h-12 flex items-center justify-between cursor-pointer"
-            onClick={() => navigate("/confirm-clear")}
+            onClick={() => handleDelete()}
           >
             <p className="flex gap-1 items-center">
               <Trash size={20} color="white" />
