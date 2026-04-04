@@ -16,6 +16,7 @@ import {
   separateInstallmentsTransactions,
   setInstallmentId,
 } from "../../services/checkInstallment";
+import { toast, ToastContainer } from "react-toastify";
 
 const AddTransaction = ({ transactions, setTransactions }) => {
   const valueInput = useRef("");
@@ -111,6 +112,7 @@ const AddTransaction = ({ transactions, setTransactions }) => {
 
   return (
     <>
+      <ToastContainer />
       <div className={`${categoryDisplay}`}>
         <CategoryList
           setCategoryInput={setCategoryInput}
@@ -195,6 +197,12 @@ const AddTransaction = ({ transactions, setTransactions }) => {
                   console.log(isDataValid.data);
                   sendTransaction(data);
                 } else {
+                  toast.error(isDataValid.error, {
+                    position: "top-center",
+                    autoClose: 2500,
+                    draggable: true,
+                    theme: "colored",
+                  });
                   console.log("Error: " + isDataValid.error);
                 }
               }}

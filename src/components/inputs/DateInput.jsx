@@ -102,7 +102,7 @@ const DateInput = ({
               className="border bg-zinc-800  rounded shadow-2xl p-1 active:scale-98 transition-all cursor-pointer"
               onClick={() => {
                 const date = getToday();
-                setDayAsToday(date.day, date.month, date.year);
+                setDayAsToday(date.day.padStart(2, "0"), date.month, date.year);
               }}
             >
               <span className="text-white font-bold">Hoje</span>
