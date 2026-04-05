@@ -1,85 +1,131 @@
-# 💸 Financee App
-
-Este projeto foi desenvolvido com foco exclusivo em dispositivos móveis.
-
-Para melhor experiência, utilize:
-
-Modo responsivo do navegador (DevTools)
-Ou acesse diretamente pelo celular
-
-## 🚀 Sobre o projeto
-
-O Financee App é uma aplicação simples e eficiente para gerenciar entradas e saídas de dinheiro, com foco em uma interface limpa, rápida e intuitiva.
-
-Este projeto foi desenvolvido como parte da minha evolução em React, com o objetivo de praticar conceitos fundamentais como:
-
-* Gerenciamento de estado
-* Componentização
-* Props e fluxo de dados
-* Estruturação de projetos front-end
+<h1 align="center">Financee</h1>
+<p align="center">Controle financeiro pessoal feito com React</p>
 
 ---
 
-## 🧠 Funcionalidades
+## Visão Geral
 
-* ✅ Visualização do saldo atual
-* ✅ Adição de valores (entrada e saída)
-* ✅ Cadastro de transações
-* ✅ Histórico de movimentações
-* 🔜 Filtros por categoria
-* 🔜 Integração com backend
+O projeto foi desenvolvido com foco em simular um cenário real de aplicação financeira, priorizando organização de código, experiência do usuário e evolução contínua de funcionalidades.
+
+A interface foi pensada com abordagem mobile-first, proporcionando uma experiência fluida em dispositivos móveis.
 
 ---
 
-## 🛠️ Tecnologias utilizadas
+
+## Demonstração
+
+<table align="center">
+  <tr>
+    <td>
+      <img src="https://i.imgur.com/PrzyC5U.gif" width="250"/>
+    </td>
+    <td align="center">
+      <img src="https://i.imgur.com/WfcfYH1.jpeg" width="350"/>
+      <br><br>
+      <p>
+        <strong>Financee</strong> é uma aplicação de controle financeiro pessoal desenvolvida com React.
+        O objetivo do projeto é permitir o gerenciamento de receitas e despesas de forma simples, organizada e intuitiva.
+      </p>
+      <p>
+        Experimente aqui: https://financee-pi.vercel.app/
+      </p>
+    </td>
+  </tr>
+</table>
+
+---
+
+## Funcionalidades
+
+* Cadastro de transações (receitas e despesas)
+* Exclusão de transações
+* Organização por categorias
+* Visualização por mês
+* Estatísticas agrupadas por categoria
+* Sistema de transações parceladas
+* Validação de dados com feedback ao usuário
+* Persistência de dados com localStorage
+* Interface responsiva
+
+---
+
+## Sistema de Parcelamento
+
+O sistema de parcelamento permite dividir uma transação em múltiplas partes distribuídas ao longo dos meses.
+
+Ao criar uma transação parcelada:
+
+* O valor total é dividido proporcionalmente
+* Cada parcela é atribuída a um mês subsequente
+* O sistema trata corretamente a virada de meses e anos
+
+Essa funcionalidade exigiu a implementação de:
+
+* Manipulação de datas
+* Controle de precisão de valores monetários
+* Consistência entre diferentes telas (dashboard, calendário e estatísticas)
+
+---
+
+## Tecnologias Utilizadas
 
 * React
 * JavaScript (ES6+)
 * Tailwind CSS
-* React Router
+* Vite
 
 ---
 
-## ⚙️ Como rodar o projeto
+## Estrutura do Projeto
 
-```bash
-# Clone o repositório
-git clone https://github.com/SEU-USUARIO/financee.git
+O projeto segue uma organização baseada em separação de responsabilidades:
 
-# Acesse a pasta
-cd financee
-
-# Instale as dependências
-npm install
-
-# Rode o projeto
-npm run dev
-```
+* `components/ui` → componentes visuais reutilizáveis
+* `components/features` → componentes relacionados às regras de negócio
+* `pages` → páginas principais da aplicação
+* `services` → manipulação de dados (localStorage)
+* `utils` → funções auxiliares (validação, cálculos)
 
 ---
 
-## 🎯 Objetivo
+## Persistência de Dados
 
-Este projeto faz parte do meu processo de transição e evolução para me tornar um desenvolvedor Full Stack, focando inicialmente em front-end com React.
+As informações são armazenadas localmente utilizando o localStorage do navegador.
 
----
-
-## 📌 Próximos passos
-
-* [ ] Criar filtros e categorias
-* [ ] Melhorar UI/UX
-* [ ] Integrar com backend (API REST)
+Foi implementado um mecanismo de migração de dados para garantir compatibilidade entre diferentes versões da aplicação.
 
 ---
 
-## 👨‍💻 Autor
+## Desafios e Aprendizados
 
-Desenvolvido por **LuisFPamplona**
+Durante o desenvolvimento, os principais desafios foram:
 
-🔗 GitHub: https://github.com/LuisFPamplona
+* Estruturar corretamente os dados das transações
+* Implementar o sistema de parcelamento
+* Garantir consistência no tratamento de datas
+* Manter o código organizado com o crescimento do projeto
+
+Este projeto contribuiu para o desenvolvimento de habilidades como:
+
+* Organização e arquitetura de código
+* Modelagem de dados
+* Gerenciamento de estado no React
+* Construção de funcionalidades voltadas ao usuário
 
 ---
 
-## 🧠 Observações
+## Melhorias Futuras
 
-Projeto em constante evolução 🚀
+* Integração com backend (Node.js e banco de dados)
+* Sistema de autenticação
+* Sincronização entre dispositivos
+* Relatórios financeiros mais avançados
+* Exportação de dados
+
+---
+
+
+## Autor
+
+Luis Pamplona
+https://github.com/LuisFPamplona
